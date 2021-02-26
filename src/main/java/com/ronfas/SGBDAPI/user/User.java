@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +23,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-//    private String username;
+    //    private String username;
 //    private String password;
     @NotBlank(message = "Firstname is mandatory")
+    @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String firstname;
 
     @NotBlank(message = "Lastname is mandatory")
+    @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String lastname;
 
 //    @ManyToMany
