@@ -11,7 +11,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String name;
+    private RoleType roleType;
     private String description;
 
     public Integer getId() {
@@ -22,12 +22,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public RoleType getRoleType() {
+        return roleType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 
     public String getDescription() {

@@ -1,9 +1,8 @@
 package com.ronfas.SGBDAPI.test;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.ronfas.SGBDAPI.classes.Classes;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -13,8 +12,10 @@ public class Test {
     private Integer id;
 
     private Date date;
-    private int points;
-    private boolean present;
+
+    @ManyToOne
+    @JoinColumn(name = "class_uid", referencedColumnName = "uid")
+    private Classes classe;
 
     public Integer getId() {
         return id;
@@ -30,21 +31,5 @@ public class Test {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public boolean isPresent() {
-        return present;
-    }
-
-    public void setPresent(boolean present) {
-        this.present = present;
     }
 }

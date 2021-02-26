@@ -1,10 +1,10 @@
 package com.ronfas.SGBDAPI.classes;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.ronfas.SGBDAPI.user.User;
+
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Classes {
@@ -17,6 +17,9 @@ public class Classes {
     private Date dateBegin;
     private Date dateEnd;
     private boolean currentFlag;
+
+    @ManyToMany(mappedBy = "classesList")
+    private List<User> userList;
 
     public Integer getUid() {
         return uid;

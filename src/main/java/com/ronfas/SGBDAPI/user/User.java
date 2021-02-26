@@ -1,9 +1,10 @@
 package com.ronfas.SGBDAPI.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.ronfas.SGBDAPI.classes.Classes;
+import com.ronfas.SGBDAPI.role.Role;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,6 +16,18 @@ public class User {
     private String password;
     private String firstname;
     private String lastname;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_classes",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "class_id", referencedColumnName = "uid")
+    )
+    private List<Classes> classesList;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private Role role;
 
     public Integer getId() {
         return id;
