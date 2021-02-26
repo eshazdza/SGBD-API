@@ -17,9 +17,9 @@ public class Classes {
     private Date dateBegin;
     private Date dateEnd;
     private boolean currentFlag;
-
-    @ManyToMany(mappedBy = "classesList")
-    private List<User> userList;
+//
+//    @ManyToMany(mappedBy = "classesList")
+//    private List<User> userList;
 
     public Integer getUid() {
         return uid;
