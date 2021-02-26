@@ -5,9 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SgbdApiApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SgbdApiApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(SgbdApiApplication.class, args);
+    }
 }
