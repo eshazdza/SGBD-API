@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.test;
 
+import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -46,7 +47,7 @@ public class TestController {
     EntityModel<Test> one(
             @PathVariable Long id
     ) {
-        Test test = testRepository.findById(id).orElseThrow();
+        Test test = testRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Test.class, "id", id.toString()));
         return testModelAssember.toModel(test);
     }
 
