@@ -9,6 +9,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Path;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +65,34 @@ public class UserController {
                         .toUri())
                 .body(userEntityModel);
     }
+
+    @PutMapping("/{id}/update")
+    ResponseEntity<?> updateUser(
+            @RequestBody @Valid User newUser,
+            @PathVariable Long id
+    ) {
+        User updatedUser = userRepository.findById(id)
+                .map(user -> {
+                    user.setFirstname(newUser.getFirstname());
+                    user.setLastname(newUser.getLastname());
+                    return userRepository.save(user);
+                })
+                .orElseGet(() -> {
+                    newUser.setId(id);
+                    return userRepository.save(newUser);
+                });
+
+        EntityModel<User> userEntityModel = userModelAssembler.toModel(updatedUser);
+
+        return ResponseEntity
+                .created(userEntityModel.getRequiredLink(
+                        IanaLinkRelations.SELF
+                        ).toUri()
+                ).body(userEntityModel);
+    }
+
+    @DeleteMapping("/{id}")
+
 
     //    Handle validation errors
     @ResponseStatus(HttpStatus.BAD_REQUEST)
