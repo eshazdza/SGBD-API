@@ -9,7 +9,7 @@ import java.util.Date;
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private Date date;
 
@@ -17,11 +17,11 @@ public class Test {
     @JoinColumn(name = "class_uid", referencedColumnName = "uid")
     private Classes classe;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

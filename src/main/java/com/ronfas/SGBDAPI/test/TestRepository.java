@@ -1,6 +1,6 @@
 package com.ronfas.SGBDAPI.test;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TestRepository extends CrudRepository<Test, Integer> {
+public interface TestRepository extends JpaRepository<Test, Long> {
 }

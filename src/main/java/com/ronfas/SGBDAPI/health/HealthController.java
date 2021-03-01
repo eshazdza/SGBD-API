@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthController {
     @GetMapping("/health")
     @ResponseStatus(HttpStatus.OK)
-    public void getHealth(){
+    public void getHealth() {
     }
 
     @GetMapping("/teapot")
     @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    public void getTeaPot(){
+    public void getTeaPot() {
     }
 }
