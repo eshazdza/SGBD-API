@@ -1,19 +1,14 @@
 package com.ronfas.SGBDAPI.user;
 
+import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Path;
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -47,7 +42,9 @@ public class UserController {
     EntityModel<User> one(
             @PathVariable Long id
     ) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(User.class, "id", id.toString())
+        );
         return userModelAssembler.toModel(user);
     }
 
@@ -66,7 +63,7 @@ public class UserController {
                 .body(userEntityModel);
     }
 
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     ResponseEntity<?> updateUser(
             @RequestBody @Valid User newUser,
             @PathVariable Long id
@@ -89,22 +86,15 @@ public class UserController {
                         IanaLinkRelations.SELF
                         ).toUri()
                 ).body(userEntityModel);
+
     }
 
     @DeleteMapping("/{id}")
-
-
-    //    Handle validation errors
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
+    ResponseEntity<?> delete(
+            @PathVariable Long id
+    ) {
+        userRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
+
 }

@@ -7,11 +7,8 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +46,7 @@ public class TestController {
     EntityModel<Test> one(
             @PathVariable Long id
     ) {
-        Test test = testRepository.findById(id).orElseThrow(() -> new TestNotFoundException(id));
+        Test test = testRepository.findById(id).orElseThrow();
         return testModelAssember.toModel(test);
     }
 
@@ -65,19 +62,5 @@ public class TestController {
                         .getRequiredLink(IanaLinkRelations.SELF)
                         .toUri())
                 .body(testEntityModel);
-    }
-
-    //    Handle validation errors
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
     }
 }

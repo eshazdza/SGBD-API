@@ -25,11 +25,7 @@ public class UserModelAssembler implements RepresentationModelAssembler<User, En
                         linkTo(
                                 methodOn(UserController.class)
                                         .all()
-                        ).withRel("users"),
-                        linkTo(
-                                methodOn(UserController.class)
-                                .updateUser( user, user.getId())
-                        ).withRel("update")
+                        ).withRel("users")
 
                 );
     }
