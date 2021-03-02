@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.error;
 
+import net.minidev.json.JSONUtil;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -108,6 +109,7 @@ class ApiError {
 
     public void addValidationErrors(List<FieldError> fieldErrors) {
         fieldErrors.forEach(this::addValidationError);
+        this.subErrors.forEach(err-> System.out.println((ApiValidationError)err.getObject()));
     }
 
     private void addValidationError(ObjectError objectError) {
