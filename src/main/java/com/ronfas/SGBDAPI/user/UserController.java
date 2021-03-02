@@ -1,6 +1,5 @@
 package com.ronfas.SGBDAPI.user;
 
-import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -8,8 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -18,14 +15,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
     private final UserService userService;
-    private final UserModelAssembler userModelAssembler;
 
-    public UserController(UserRepository userRepository, UserService userService, UserModelAssembler userModelAssembler) {
-        this.userRepository = userRepository;
+    public UserController( UserService userService) {
         this.userService = userService;
-        this.userModelAssembler = userModelAssembler;
     }
 
     @GetMapping("")
