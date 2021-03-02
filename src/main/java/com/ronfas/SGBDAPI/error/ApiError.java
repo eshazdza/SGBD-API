@@ -104,12 +104,12 @@ class ApiError {
                 fieldError.getObjectName(),
                 fieldError.getField(),
                 fieldError.getRejectedValue(),
-                fieldError.getDefaultMessage());
+                fieldError.getDefaultMessage()
+        );
     }
 
     public void addValidationErrors(List<FieldError> fieldErrors) {
         fieldErrors.forEach(this::addValidationError);
-        this.subErrors.forEach(err-> System.out.println((ApiValidationError)err.getObject()));
     }
 
     private void addValidationError(ObjectError objectError) {
