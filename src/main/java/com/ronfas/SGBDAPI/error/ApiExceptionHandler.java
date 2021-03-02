@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.error;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     /**
      * Handle MethodArgumentNotValidException. Triggered when an object fails @Valid validation.
      *
-     * @param ex HttpMessageNotReadableException
+     * @param ex      HttpMessageNotReadableException
      * @param headers Http Headers
-     * @param status Http Status code
+     * @param status  Http Status code
      * @param request Http Request
      * @return ResponseEntity
      */
@@ -79,5 +80,4 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
-
 }

@@ -19,21 +19,18 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final UserService userService;
     private final UserModelAssembler userModelAssembler;
 
-    public UserController(UserRepository userRepository, UserModelAssembler userModelAssembler) {
+    public UserController(UserRepository userRepository, UserService userService, UserModelAssembler userModelAssembler) {
         this.userRepository = userRepository;
+        this.userService = userService;
         this.userModelAssembler = userModelAssembler;
     }
 
     @GetMapping("")
     CollectionModel<EntityModel<User>> all() {
-        List<EntityModel<User>> users = userRepository.findAll()
-                .stream()
-                .map(userModelAssembler::toModel)
-                .collect(Collectors.toList());
-
-        return CollectionModel.of(users, linkTo(
+        return CollectionModel.of(this.userService.getAllUsers(), linkTo(
                 methodOn(UserController.class).all()).withSelfRel()
         );
     }
@@ -42,20 +39,15 @@ public class UserController {
     EntityModel<User> one(
             @PathVariable Long id
     ) {
-        User user = userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(User.class, "id", id.toString())
-        );
-        return userModelAssembler.toModel(user);
+        return this.userService.getUserById(id);
     }
 
     @PostMapping("")
     ResponseEntity<?> newUser(
             @RequestBody @Valid User newUser
     ) {
-//        Save the entity and creates a REST compliant model of said entity
-        EntityModel<User> userEntityModel = userModelAssembler.toModel(userRepository.save(newUser));
-
-//        Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
+        EntityModel<User> userEntityModel = this.userService.saveUser(newUser);
+//      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 userEntityModel
                         .getRequiredLink(IanaLinkRelations.SELF)
@@ -65,21 +57,10 @@ public class UserController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateUser(
-            @RequestBody @Valid User newUser,
+            @RequestBody @Valid User user,
             @PathVariable Long id
     ) {
-        User updatedUser = userRepository.findById(id)
-                .map(user -> {
-                    user.setFirstname(newUser.getFirstname());
-                    user.setLastname(newUser.getLastname());
-                    return userRepository.save(user);
-                })
-                .orElseGet(() -> {
-                    newUser.setId(id);
-                    return userRepository.save(newUser);
-                });
-
-        EntityModel<User> userEntityModel = userModelAssembler.toModel(updatedUser);
+        EntityModel<User> userEntityModel = this.userService.updateUser(user, id);
 
         return ResponseEntity
                 .created(userEntityModel.getRequiredLink(
@@ -93,7 +74,7 @@ public class UserController {
     ResponseEntity<?> delete(
             @PathVariable Long id
     ) {
-        userRepository.deleteById(id);
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
