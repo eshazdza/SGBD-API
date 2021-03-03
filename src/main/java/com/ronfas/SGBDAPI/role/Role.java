@@ -29,7 +29,7 @@ public class Role {
 
     public Role(String roleType) {
         try {
-            this.roleType = RoleType.valueOf(roleType);
+            this.roleType = RoleType.valueOf(roleType.toUpperCase());
         } catch (IllegalArgumentException exception) {
             throw new InvalidRoleException(Role.class, "roleType", roleType);
         }
