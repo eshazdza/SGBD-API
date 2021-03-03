@@ -1,8 +1,8 @@
 package com.ronfas.SGBDAPI.role;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.error.InvalidRoleException;
 import com.ronfas.SGBDAPI.user.User;
-import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,7 +23,8 @@ public class Role {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("role")
     private List<User> users;
 
     public Role(Long id, RoleType roleType, String description) {

@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.classes.Classes;
 import com.ronfas.SGBDAPI.role.Role;
 
@@ -34,12 +35,11 @@ public class User {
 //
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("users")
     private Role role;
 
     public User(Long id, String username, String password, String firstname, String lastname, List<Classes> classesList, Role role) {
         this.id = id;
-//        this.username = username;
-//        this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
 //        this.classesList = classesList;
