@@ -1,6 +1,7 @@
 package com.ronfas.SGBDAPI.classes;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
 
-public interface ClassesRepository extends CrudRepository<Classes, Integer> {
+public interface ClassesRepository extends JpaRepository<Classes, UUID> {
 }

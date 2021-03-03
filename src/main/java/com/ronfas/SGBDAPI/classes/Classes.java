@@ -6,12 +6,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Classes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer uid;
+    private UUID uid;
 
     @NotBlank(message = "ID is mandatory")
     private String id;
@@ -27,11 +28,11 @@ public class Classes {
     @ManyToMany(mappedBy = "classesList")
     private List<User> userList;
 
-    public Integer getUid() {
+    public UUID getUid() {
         return uid;
     }
 
-    public void setUid(Integer uid) {
+    public void setUid(UUID uid) {
         this.uid = uid;
     }
 
