@@ -34,6 +34,9 @@ public class RoleService {
 
     public EntityModel<Role> getRoleByType(RoleType roleType) {
         Role role = roleRepository.findByRoleType(roleType);
+        if (role == null){
+            throw new EntityNotFoundException(Role.class, "roleType", roleType.toString());
+        }
         return roleModelAssembler.toModel(role);
     }
 

@@ -2,8 +2,11 @@ package com.ronfas.SGBDAPI.role;
 
 import com.ronfas.SGBDAPI.error.InvalidRoleException;
 import com.ronfas.SGBDAPI.user.User;
+import org.hibernate.annotations.Columns;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -12,7 +15,12 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
+    @NotNull(message = "Role type is mandatory")
     private RoleType roleType;
+
+    @Column(unique = true)
+    @NotBlank(message = "Description is mandatory")
     private String description;
 
     @OneToMany(mappedBy = "role")

@@ -56,7 +56,6 @@ public class UserService {
     public EntityModel<User> saveUser(User user) {
         this.validateUser(user);
         return userModelAssembler.toModel(userRepository.save(user));
-
     }
 
     /**
@@ -93,6 +92,7 @@ public class UserService {
     }
 
     private void validateUser(User user) {
+        this.roleService.getRoleByType(user.getRole().getRoleType());
     }
 
 }

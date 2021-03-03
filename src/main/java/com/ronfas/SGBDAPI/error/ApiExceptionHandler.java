@@ -1,6 +1,6 @@
 package com.ronfas.SGBDAPI.error;
 
-import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -34,8 +34,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request
     ) {
         String error = "Malformed JSON Request";
-        if (ex.getMostSpecificCause() instanceof InvalidRoleException){
-            error =  ex.getMostSpecificCause().getMessage();
+        if (ex.getMostSpecificCause() instanceof InvalidRoleException) {
+            error = ex.getMostSpecificCause().getMessage();
+        } else if (ex.getMostSpecificCause() instanceof InvalidFormatException) {
+            error = "Role invalide.";
         }
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
     }
