@@ -1,6 +1,7 @@
 package com.ronfas.SGBDAPI.user;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
+import com.ronfas.SGBDAPI.role.RoleService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserModelAssembler userModelAssembler;
+    private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, UserModelAssembler userModelAssembler) {
+    public UserService(UserRepository userRepository, UserModelAssembler userModelAssembler, RoleService roleService) {
         this.userRepository = userRepository;
         this.userModelAssembler = userModelAssembler;
+        this.roleService = roleService;
     }
 
     /**
@@ -51,7 +54,9 @@ public class UserService {
      * @return REST compliant model of the persisted user
      */
     public EntityModel<User> saveUser(User user) {
+        this.validateUser(user);
         return userModelAssembler.toModel(userRepository.save(user));
+
     }
 
     /**
@@ -77,7 +82,6 @@ public class UserService {
     }
 
     /**
-     *
      * @param id of the user to delete
      */
     public void deleteUser(Long id) {
@@ -86,6 +90,9 @@ public class UserService {
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(User.class, "id", id.toString());
         }
+    }
+
+    private void validateUser(User user) {
     }
 
 }

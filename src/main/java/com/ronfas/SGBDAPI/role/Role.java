@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.role;
 
+import com.ronfas.SGBDAPI.error.InvalidRoleException;
 import com.ronfas.SGBDAPI.user.User;
 
 import javax.persistence.*;
@@ -16,6 +17,23 @@ public class Role {
 
     @OneToMany(mappedBy = "role")
     private List<User> users;
+
+    public Role(Long id, RoleType roleType, String description) {
+        this.id = id;
+        this.roleType = roleType;
+        this.description = description;
+    }
+
+    public Role() {
+    }
+
+    public Role(String roleType) {
+        try {
+            this.roleType = RoleType.valueOf(roleType);
+        } catch (IllegalArgumentException exception) {
+            throw new InvalidRoleException(Role.class, "roleType", roleType);
+        }
+    }
 
     public Long getId() {
         return id;
@@ -40,4 +58,13 @@ public class Role {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
 }
