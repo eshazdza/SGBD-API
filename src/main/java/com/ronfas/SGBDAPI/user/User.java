@@ -25,13 +25,13 @@ public class User {
     @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String lastname;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "user_classes",
-//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "class_id", referencedColumnName = "uid")
-//    )
-//    private List<Classes> classesList;
+    @ManyToMany
+    @JoinTable(
+            name = "user_classes",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "class_id", referencedColumnName = "uid")
+    )
+    private List<Classes> classesList;
 //
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")

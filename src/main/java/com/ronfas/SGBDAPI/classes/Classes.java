@@ -3,6 +3,7 @@ package com.ronfas.SGBDAPI.classes;
 import com.ronfas.SGBDAPI.user.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +13,19 @@ public class Classes {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer uid;
 
+    @NotBlank(message = "ID is mandatory")
     private String id;
+
+    @NotBlank(message = "Name is mandatory")
     private String name;
+
     private Date dateBegin;
     private Date dateEnd;
+
     private boolean currentFlag;
-//
-//    @ManyToMany(mappedBy = "classesList")
-//    private List<User> userList;
+
+    @ManyToMany(mappedBy = "classesList")
+    private List<User> userList;
 
     public Integer getUid() {
         return uid;
