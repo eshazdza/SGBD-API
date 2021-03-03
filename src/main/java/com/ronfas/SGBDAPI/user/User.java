@@ -32,9 +32,9 @@ public class User {
 //    )
 //    private List<Classes> classesList;
 //
-//    @ManyToOne
-//    @JoinColumn(name = "role_id", referencedColumnName = "id")
-//    private Role role;
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private Role role;
 
     public User(Long id, String username, String password, String firstname, String lastname, List<Classes> classesList, Role role) {
         this.id = id;
@@ -43,7 +43,7 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
 //        this.classesList = classesList;
-//        this.role = role;
+        this.role = role;
     }
 
     public User() {
