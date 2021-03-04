@@ -28,6 +28,21 @@ public class Classes {
     @OneToMany(mappedBy = "classe")
     private List<Inscription> usersList;
 
+    public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList) {
+        this.uid = uid;
+        this.id = id;
+        this.name = name;
+        this.dateBegin = dateBegin;
+        this.dateEnd = dateEnd;
+        this.currentFlag = currentFlag;
+        this.usersList = usersList;
+    }
+
+
+    public Classes() {
+
+    }
+
     public UUID getUid() {
         return uid;
     }
@@ -74,5 +89,13 @@ public class Classes {
 
     public void setCurrentFlag(boolean currentFlag) {
         this.currentFlag = currentFlag;
+    }
+
+    public List<Inscription> getUsersList() {
+        return usersList;
+    }
+
+    public void setUsersList(List<Inscription> usersList) {
+        this.usersList = usersList;
     }
 }

@@ -1,7 +1,5 @@
 package com.ronfas.SGBDAPI.inscription;
 
-import com.ronfas.SGBDAPI.user.User;
-import com.ronfas.SGBDAPI.user.UserController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

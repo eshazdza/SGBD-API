@@ -5,6 +5,7 @@ import com.ronfas.SGBDAPI.role.Role;
 import com.ronfas.SGBDAPI.user.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "user_cours")
 public class Inscription {
@@ -12,16 +13,19 @@ public class Inscription {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "User is mandatory.")
     @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
+    @NotNull(message = "Class is mandatory.")
     @ManyToOne(targetEntity = Classes.class)
-    @JoinColumn(name = "class_uid", referencedColumnName = "uid")
+    @JoinColumn(name = "class_uid", referencedColumnName = "uid", nullable = false)
     private Classes classe;
 
+    @NotNull(message = "Role is mandatory.")
     @ManyToOne(targetEntity = Role.class)
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
 
     public Inscription(Long id, User user, Classes classe, Role role) {
@@ -29,6 +33,10 @@ public class Inscription {
         this.user = user;
         this.classe = classe;
         this.role = role;
+    }
+
+    public Inscription() {
+
     }
 
     public Long getId() {
