@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.role;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.error.InvalidRoleException;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 
@@ -23,6 +24,7 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role")
+    @JsonIgnoreProperties({"id", "role"})
     private List<Inscription> usersList;
 
     public Role(Long id, @NotNull(message = "Role type is mandatory") RoleType roleType, @NotBlank(message = "Description is mandatory") String description, List<Inscription> usersList) {

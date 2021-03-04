@@ -32,7 +32,7 @@ public class Classes {
     private boolean currentFlag;
 
     @OneToMany(mappedBy = "classe")
-    @JsonIgnoreProperties("classe")
+    @JsonIgnoreProperties({"classe", "id"})
     private List<Inscription> usersList;
 
     public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList) {

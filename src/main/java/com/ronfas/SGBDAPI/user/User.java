@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class User {
     private boolean isAdmin;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"id", "user"})
     private List<Inscription> userCoursList;
 
     public User(Long id, @NotBlank(message = "Firstname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String firstname, @NotBlank(message = "Lastname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String lastname, boolean isAdmin, List<Inscription> userCoursList) {
