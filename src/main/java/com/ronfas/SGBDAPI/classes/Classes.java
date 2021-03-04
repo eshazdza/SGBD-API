@@ -40,7 +40,6 @@ public class Classes {
 
 
     public Classes() {
-
     }
 
     public UUID getUid() {
