@@ -1,7 +1,7 @@
 package com.ronfas.SGBDAPI.role;
 
 import com.ronfas.SGBDAPI.error.InvalidRoleException;
-import com.ronfas.SGBDAPI.user_cours.Inscription;
+import com.ronfas.SGBDAPI.inscription.Inscription;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

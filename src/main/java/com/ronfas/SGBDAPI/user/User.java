@@ -1,6 +1,6 @@
 package com.ronfas.SGBDAPI.user;
 
-import com.ronfas.SGBDAPI.user_cours.Inscription;
+import com.ronfas.SGBDAPI.inscription.Inscription;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
