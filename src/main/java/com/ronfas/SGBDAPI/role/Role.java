@@ -1,8 +1,7 @@
 package com.ronfas.SGBDAPI.role;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.error.InvalidRoleException;
-import com.ronfas.SGBDAPI.user.User;
+import com.ronfas.SGBDAPI.user_cours.Inscription;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,14 +22,14 @@ public class Role {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
-    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("role")
-    private List<User> users;
+    @OneToMany(mappedBy = "role")
+    private List<Inscription> usersList;
 
-    public Role(Long id, RoleType roleType, String description) {
+    public Role(Long id, @NotNull(message = "Role type is mandatory") RoleType roleType, @NotBlank(message = "Description is mandatory") String description, List<Inscription> usersList) {
         this.id = id;
         this.roleType = roleType;
         this.description = description;
+        this.usersList = usersList;
     }
 
     public Role() {
@@ -68,12 +67,11 @@ public class Role {
         this.description = description;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Inscription> getUsersList() {
+        return usersList;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUsersList(List<Inscription> usersList) {
+        this.usersList = usersList;
     }
-
 }

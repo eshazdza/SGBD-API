@@ -1,6 +1,6 @@
 package com.ronfas.SGBDAPI.classes;
 
-import com.ronfas.SGBDAPI.user.User;
+import com.ronfas.SGBDAPI.user_cours.Inscription;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,8 +25,8 @@ public class Classes {
 
     private boolean currentFlag;
 
-    @ManyToMany(mappedBy = "classesList")
-    private List<User> userList;
+    @OneToMany(mappedBy = "classe")
+    private List<Inscription> usersList;
 
     public UUID getUid() {
         return uid;

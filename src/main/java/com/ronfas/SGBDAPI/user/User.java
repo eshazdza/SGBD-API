@@ -1,8 +1,6 @@
 package com.ronfas.SGBDAPI.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ronfas.SGBDAPI.classes.Classes;
-import com.ronfas.SGBDAPI.role.Role;
+import com.ronfas.SGBDAPI.user_cours.Inscription;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,8 +13,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //    private String username;
-//    private String password;
     @NotBlank(message = "Firstname is mandatory")
     @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String firstname;
@@ -25,19 +21,17 @@ public class User {
     @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String lastname;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_classes",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "class_id", referencedColumnName = "uid")
-    )
-    private List<Classes> classesList;
+    private boolean isAdmin;
 
-    public User(Long id, String username, String password, String firstname, String lastname, List<Classes> classesList) {
+    @OneToMany(mappedBy = "user")
+    private List<Inscription> userCoursList;
+
+    public User(Long id, @NotBlank(message = "Firstname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String firstname, @NotBlank(message = "Lastname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String lastname, boolean isAdmin, List<Inscription> userCoursList) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-//        this.classesList = classesList;
+        this.isAdmin = isAdmin;
+        this.userCoursList = userCoursList;
     }
 
     public User() {
@@ -68,12 +62,19 @@ public class User {
         this.lastname = lastname;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public List<Inscription> getUserCoursList() {
+        return userCoursList;
+    }
+
+    public void setUserCoursList(List<Inscription> userCoursList) {
+        this.userCoursList = userCoursList;
     }
 }
