@@ -39,9 +39,9 @@ public class ClassesService {
      * @return Found Classes in REST compliant model
      * @throws EntityNotFoundException when no Classes is found for the requested id
      */
-    public EntityModel<Classes> getClasseByUid(UUID id) {
-        Classes classes = classesRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(Classes.class, "id", id.toString()));
+    public EntityModel<Classes> getClasseByUid(UUID uuid) {
+        Classes classes = classesRepository.findByUid(uuid).orElseThrow(
+                () -> new EntityNotFoundException(Classes.class, "uuid", uuid.toString()));
         return classesModelAssembler.toModel(classes);
     }
 
@@ -63,13 +63,14 @@ public class ClassesService {
      * @return REST compliant model of the persisted Classes
      */
     public EntityModel<Classes> updateClasse(Classes classes, UUID uid) {
-        Classes updatedClasse = classesRepository.findById(uid)
+        Classes updatedClasse = classesRepository.findByUid(uid)
                 .map(foundClass -> {
                     foundClass.setName(classes.getName());
                     foundClass.setDateBegin(classes.getDateBegin());
                     foundClass.setDateEnd(classes.getDateEnd());
                     foundClass.setUsersList(classes.getUsersList());
                     foundClass.setCurrentFlag(classes.isCurrentFlag());
+                    foundClass.setUid(classes.getUid());
                     return classesRepository.save(foundClass);
                 })
                 .orElseGet(() -> {

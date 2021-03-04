@@ -22,7 +22,7 @@ public class ClassesModelAssembler implements RepresentationModelAssembler<Class
                         linkTo(
                                 methodOn(ClassesController.class)
                                         .all()
-                        ).withRel("users")
+                        ).withRel("classes")
                 );
     }
 }

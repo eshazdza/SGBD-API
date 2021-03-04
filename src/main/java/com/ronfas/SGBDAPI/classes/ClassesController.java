@@ -1,8 +1,5 @@
 package com.ronfas.SGBDAPI.classes;
 
-import com.ronfas.SGBDAPI.user.User;
-import com.ronfas.SGBDAPI.user.UserController;
-import com.ronfas.SGBDAPI.user.UserService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;

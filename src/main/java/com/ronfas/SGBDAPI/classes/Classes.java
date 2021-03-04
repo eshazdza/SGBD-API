@@ -1,6 +1,9 @@
 package com.ronfas.SGBDAPI.classes;
 
 import com.ronfas.SGBDAPI.inscription.Inscription;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.UUIDCharType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +14,9 @@ import java.util.UUID;
 @Entity
 public class Classes {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID uid;
 
     @NotBlank(message = "ID is mandatory")
