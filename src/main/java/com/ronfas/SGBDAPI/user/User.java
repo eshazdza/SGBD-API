@@ -32,18 +32,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "class_id", referencedColumnName = "uid")
     )
     private List<Classes> classesList;
-//
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
-    @JsonIgnoreProperties("users")
-    private Role role;
 
-    public User(Long id, String username, String password, String firstname, String lastname, List<Classes> classesList, Role role) {
+    public User(Long id, String username, String password, String firstname, String lastname, List<Classes> classesList) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
 //        this.classesList = classesList;
-        this.role = role;
     }
 
     public User() {
@@ -57,7 +51,6 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getFirstname() {
         return firstname;
@@ -73,14 +66,6 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     @Override

@@ -14,12 +14,10 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserModelAssembler userModelAssembler;
-    private final RoleService roleService;
 
-    public UserService(UserRepository userRepository, UserModelAssembler userModelAssembler, RoleService roleService) {
+    public UserService(UserRepository userRepository, UserModelAssembler userModelAssembler) {
         this.userRepository = userRepository;
         this.userModelAssembler = userModelAssembler;
-        this.roleService = roleService;
     }
 
     /**
@@ -54,7 +52,6 @@ public class UserService {
      * @return REST compliant model of the persisted user
      */
     public EntityModel<User> saveUser(User user) {
-        this.validateUser(user);
         return userModelAssembler.toModel(userRepository.save(user));
     }
 
@@ -90,9 +87,4 @@ public class UserService {
             throw new EntityNotFoundException(User.class, "id", id.toString());
         }
     }
-
-    private void validateUser(User user) {
-        this.roleService.getRoleByType(user.getRole().getRoleType());
-    }
-
 }
