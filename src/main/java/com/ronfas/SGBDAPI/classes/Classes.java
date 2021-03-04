@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -31,6 +32,7 @@ public class Classes {
     private boolean currentFlag;
 
     @OneToMany(mappedBy = "classe")
+    @JsonIgnoreProperties("classe")
     private List<Inscription> usersList;
 
     public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList) {

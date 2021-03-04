@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.inscription;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.classes.Classes;
 import com.ronfas.SGBDAPI.role.Role;
 import com.ronfas.SGBDAPI.user.User;
@@ -16,16 +17,19 @@ public class Inscription {
     @NotNull(message = "User is mandatory.")
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties("userCoursList")
     private User user;
 
     @NotNull(message = "Class is mandatory.")
     @ManyToOne(targetEntity = Classes.class)
     @JoinColumn(name = "class_uid", referencedColumnName = "uid", nullable = false)
+    @JsonIgnoreProperties("usersList")
     private Classes classe;
 
     @NotNull(message = "Role is mandatory.")
     @ManyToOne(targetEntity = Role.class)
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnoreProperties("usersList")
     private Role role;
 
     public Inscription(Long id, User user, Classes classe, Role role) {
