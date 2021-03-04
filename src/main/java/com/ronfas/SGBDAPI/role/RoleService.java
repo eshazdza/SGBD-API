@@ -49,6 +49,7 @@ public class RoleService {
                 .map(foundRole -> {
                     foundRole.setDescription(role.getDescription());
                     foundRole.setRoleType(role.getRoleType());
+                    foundRole.setUsersList(role.getUsersList());
                     return roleRepository.save(foundRole);
                 })
                 .orElseGet(() -> {

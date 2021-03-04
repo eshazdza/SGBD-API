@@ -65,7 +65,11 @@ public class ClassesService {
     public EntityModel<Classes> updateClasse(Classes classes, UUID uid) {
         Classes updatedClasse = classesRepository.findById(uid)
                 .map(foundClass -> {
-                   //TODO update class
+                    foundClass.setName(classes.getName());
+                    foundClass.setDateBegin(classes.getDateBegin());
+                    foundClass.setDateEnd(classes.getDateEnd());
+                    foundClass.setUsersList(classes.getUsersList());
+                    foundClass.setCurrentFlag(classes.isCurrentFlag());
                     return classesRepository.save(foundClass);
                 })
                 .orElseGet(() -> {
