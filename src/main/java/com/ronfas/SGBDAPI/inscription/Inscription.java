@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.classes.Classes;
 import com.ronfas.SGBDAPI.role.Role;
 import com.ronfas.SGBDAPI.user.User;
+import com.ronfas.SGBDAPI.userTest.UserTest;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity(name = "user_cours")
 public class Inscription {
@@ -31,6 +33,10 @@ public class Inscription {
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     @JsonIgnoreProperties("usersList")
     private Role role;
+
+    @OneToMany(mappedBy = "inscription")
+    @JsonIgnoreProperties({"inscription", "id"})
+    private List<UserTest> userTestList;
 
     public Inscription(Long id, User user, Classes classe, Role role) {
         this.id = id;
