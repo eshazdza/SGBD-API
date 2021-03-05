@@ -1,7 +1,6 @@
 package com.ronfas.SGBDAPI.user;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
-import com.ronfas.SGBDAPI.role.RoleService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;

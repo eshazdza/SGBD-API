@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.inscription.Inscription;
+import com.ronfas.SGBDAPI.test.Test;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.type.UUIDCharType;
@@ -35,7 +36,11 @@ public class Classes {
     @JsonIgnoreProperties({"classe", "id"})
     private List<Inscription> usersList;
 
-    public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList) {
+    @OneToMany(mappedBy = "classe")
+    @JsonIgnoreProperties({"classe", "id"})
+    private List<Test> testsList;
+
+    public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList, List<Test> testsList) {
         this.uid = uid;
         this.id = id;
         this.name = name;
@@ -43,8 +48,8 @@ public class Classes {
         this.dateEnd = dateEnd;
         this.currentFlag = currentFlag;
         this.usersList = usersList;
+        this.testsList = testsList;
     }
-
 
     public Classes() {
     }
@@ -103,5 +108,13 @@ public class Classes {
 
     public void setUsersList(List<Inscription> usersList) {
         this.usersList = usersList;
+    }
+
+    public List<Test> getTestsList() {
+        return testsList;
+    }
+
+    public void setTestsList(List<Test> testsList) {
+        this.testsList = testsList;
     }
 }

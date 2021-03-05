@@ -3,6 +3,7 @@ package com.ronfas.SGBDAPI.test;
 import com.ronfas.SGBDAPI.classes.Classes;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -13,6 +14,7 @@ public class Test {
 
     private Date date;
 
+    @NotNull(message = "Classe is mandatory")
     @ManyToOne
     @JoinColumn(name = "class_uid", referencedColumnName = "uid")
     private Classes classe;
@@ -31,5 +33,13 @@ public class Test {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Classes getClasse() {
+        return classe;
+    }
+
+    public void setClasse(Classes classe) {
+        this.classe = classe;
     }
 }

@@ -1,6 +1,7 @@
 package com.ronfas.SGBDAPI.test;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
+import com.ronfas.SGBDAPI.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,23 +23,16 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/tests")
 public class TestController {
-    @Autowired
-    private final TestRepository testRepository;
-    private final TestModelAssembler testModelAssember;
 
-    public TestController(TestRepository testRepository, TestModelAssembler testModelAssember) {
-        this.testRepository = testRepository;
-        this.testModelAssember = testModelAssember;
+    private final TestService testService;
+
+    public TestController(TestService testService) {
+        this.testService = testService;
     }
 
     @GetMapping("")
     CollectionModel<EntityModel<Test>> all() {
-        List<EntityModel<Test>> tests = testRepository.findAll()
-                .stream()
-                .map(testModelAssember::toModel)
-                .collect(Collectors.toList());
-
-        return CollectionModel.of(tests, linkTo(
+        return CollectionModel.of(testService.getAllTests(), linkTo(
                 methodOn(TestController.class).all()).withSelfRel()
         );
     }
@@ -47,8 +42,7 @@ public class TestController {
     EntityModel<Test> one(
             @PathVariable Long id
     ) {
-        Test test = testRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Test.class, "id", id.toString()));
-        return testModelAssember.toModel(test);
+        return testService.getTestById(id);
     }
 
 
@@ -56,7 +50,7 @@ public class TestController {
     ResponseEntity<?> newTest(
             @RequestBody Test newTest
     ) {
-        EntityModel<Test> testEntityModel = testModelAssember.toModel(testRepository.save(newTest));
+        EntityModel<Test> testEntityModel = testService.savetest(newTest);
 
         return ResponseEntity.created(
                 testEntityModel
@@ -64,4 +58,29 @@ public class TestController {
                         .toUri())
                 .body(testEntityModel);
     }
+
+    @PutMapping("/{id}")
+    ResponseEntity<?> updateTest(
+            @RequestBody @Valid Test test,
+            @PathVariable Long id
+    ) {
+        EntityModel<Test> testEntityModel = this.testService.updateTest(test, id);
+
+        return ResponseEntity
+                .created(testEntityModel.getRequiredLink(
+                        IanaLinkRelations.SELF
+                        ).toUri()
+                ).body(testEntityModel);
+
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<?> delete(
+            @PathVariable Long id
+    ) {
+        testService.deleteTest(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
