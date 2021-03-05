@@ -50,7 +50,7 @@ public class TestController {
     ResponseEntity<?> newTest(
             @RequestBody Test newTest
     ) {
-        EntityModel<Test> testEntityModel = testService.savetest(newTest);
+        EntityModel<Test> testEntityModel = testService.saveTest(newTest);
 
         return ResponseEntity.created(
                 testEntityModel

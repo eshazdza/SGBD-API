@@ -50,7 +50,7 @@ public class TestService {
      * @param test Tests entity to persist - Tests
      * @return REST compliant model of the persisted Tests
      */
-    public EntityModel<Test> savetest(Test test) {
+    public EntityModel<Test> saveTest(Test test) {
         return testModelAssembler.toModel(testRepository.save(test));
     }
 
