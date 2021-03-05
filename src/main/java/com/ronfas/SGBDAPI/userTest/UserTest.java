@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.userTest;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.test.Test;
 
@@ -16,6 +17,7 @@ public class UserTest {
 
     @ManyToOne
     @JoinColumn(name = "test_id", referencedColumnName = "id")
+    @JsonIgnoreProperties({"classe", "userTestList"})
     private Test test;
 
     @ManyToOne

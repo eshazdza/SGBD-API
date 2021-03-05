@@ -21,6 +21,7 @@ public class Test {
     @NotNull(message = "Classe is mandatory")
     @ManyToOne
     @JoinColumn(name = "class_uid", referencedColumnName = "uid")
+    @JsonIgnoreProperties({"testsList"})
     private Classes classe;
 
     @OneToMany(mappedBy = "test")

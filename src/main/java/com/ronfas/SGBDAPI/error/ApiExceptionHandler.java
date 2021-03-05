@@ -35,7 +35,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             HttpStatus status,
             WebRequest request
     ) {
-        String error = "Malformed JSON Request";
+        String error = "Malformed JSON Request / request body is missing";
         if (ex.getMostSpecificCause() instanceof InvalidRoleException) {
             error = ex.getMostSpecificCause().getMessage();
         } else if (ex.getMostSpecificCause() instanceof InvalidFormatException) {
