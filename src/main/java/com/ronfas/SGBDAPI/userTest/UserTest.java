@@ -5,6 +5,7 @@ import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.test.Test;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class UserTest {
@@ -15,11 +16,13 @@ public class UserTest {
     private Long points;
     private boolean present;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "test_id", referencedColumnName = "id")
     @JsonIgnoreProperties({"classe", "userTestList"})
     private Test test;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "inscription_id", referencedColumnName = "id")
     private Inscription inscription;

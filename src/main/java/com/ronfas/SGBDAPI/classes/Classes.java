@@ -1,11 +1,10 @@
 package com.ronfas.SGBDAPI.classes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.test.Test;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.type.UUIDCharType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,6 +37,7 @@ public class Classes {
 
     @OneToMany(mappedBy = "classe")
     @JsonIgnoreProperties({"classe", "id"})
+    @JsonIgnore
     private List<Test> testsList;
 
     public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList, List<Test> testsList) {
