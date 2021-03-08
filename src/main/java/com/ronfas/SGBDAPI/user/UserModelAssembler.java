@@ -58,12 +58,11 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
     @Override
     public CollectionModel<UserModel> toCollectionModel(Iterable<? extends User> users) {
         CollectionModel<UserModel> userModels = super.toCollectionModel(users);
-        userModels.add(linkTo(
-                methodOn(
-                        UserController.class
-                )
-                        .all()
-        ).withSelfRel());
+        userModels.add(
+                linkTo(
+                        methodOn(UserController.class)
+                                .all()
+                ).withSelfRel());
 
         return userModels;
     }
