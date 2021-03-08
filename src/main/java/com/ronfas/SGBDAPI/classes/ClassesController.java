@@ -23,14 +23,12 @@ public class ClassesController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<Classes>> all() {
-        return CollectionModel.of(this.classesService.getAllClasses(), linkTo(
-                methodOn(ClassesController.class).all()).withSelfRel()
-        );
+    CollectionModel<ClasseModel> all() {
+        return this.classesService.getAllClasses();
     }
 
     @GetMapping("/{uid}")
-    EntityModel<Classes> one(
+    ClasseModel one(
             @PathVariable UUID uid
     ) {
         return this.classesService.getClasseByUid(uid);
@@ -40,7 +38,7 @@ public class ClassesController {
     ResponseEntity<?> newClasse (
             @RequestBody @Valid Classes newClasse
     ) {
-        EntityModel<Classes> classesEntityModel = this.classesService.saveClasse(newClasse);
+        ClasseModel classesEntityModel = this.classesService.saveClasse(newClasse);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 classesEntityModel
@@ -54,7 +52,7 @@ public class ClassesController {
             @RequestBody @Valid Classes classe,
             @PathVariable UUID uid
     ) {
-        EntityModel<Classes> classesEntityModel = this.classesService.updateClasse(classe, uid);
+        ClasseModel classesEntityModel = this.classesService.updateClasse(classe, uid);
 
         return ResponseEntity
                 .created(classesEntityModel.getRequiredLink(

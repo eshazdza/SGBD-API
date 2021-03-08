@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.classes;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
@@ -25,21 +26,18 @@ public class ClassesService {
      *
      * @return List of Classes in REST compliant model
      */
-    public List<EntityModel<Classes>> getAllClasses() {
-        return classesRepository.findAll()
-                .stream()
-                .map(classesModelAssembler::toModel)
-                .collect(Collectors.toList());
+    public CollectionModel<ClasseModel> getAllClasses() {
+        return classesModelAssembler.toCollectionModel(classesRepository.findAll());
     }
 
     /**
      * Find one Classes from provided id
      *
-     * @param id Id of the requested Classes - Long
+     * @param uuid Id of the requested Classes - Long
      * @return Found Classes in REST compliant model
      * @throws EntityNotFoundException when no Classes is found for the requested id
      */
-    public EntityModel<Classes> getClasseByUid(UUID uuid) {
+    public ClasseModel getClasseByUid(UUID uuid) {
         Classes classes = classesRepository.findByUid(uuid).orElseThrow(
                 () -> new EntityNotFoundException(Classes.class, "uuid", uuid.toString()));
         return classesModelAssembler.toModel(classes);
@@ -51,7 +49,7 @@ public class ClassesService {
      * @param classes Classes entity to persist - Classes
      * @return REST compliant model of the persisted Classes
      */
-    public EntityModel<Classes> saveClasse(Classes classes) {
+    public ClasseModel saveClasse(Classes classes) {
         return classesModelAssembler.toModel(classesRepository.save(classes));
     }
 
@@ -62,7 +60,7 @@ public class ClassesService {
      * @param uid   Of the Classes entity to update
      * @return REST compliant model of the persisted Classes
      */
-    public EntityModel<Classes> updateClasse(Classes classes, UUID uid) {
+    public ClasseModel updateClasse(Classes classes, UUID uid) {
         Classes updatedClasse = classesRepository.findByUid(uid)
                 .map(foundClass -> {
                     foundClass.setName(classes.getName());
