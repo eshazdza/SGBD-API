@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.user;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,12 @@ public class UserService {
      *
      * @return List of Users in REST compliant model
      */
-    public List<EntityModel<User>> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
-                .map(userModelAssembler::toModel)
-                .collect(Collectors.toList());
+    public CollectionModel<UserModel> getAllUsers() {
+        return userModelAssembler.toCollectionModel(userRepository.findAll());
+//        return userRepository.findAll()
+//                .stream()
+//                .map(userModelAssembler::toModel)
+//                .collect(Collectors.toList());
     }
 
     /**
@@ -38,7 +40,7 @@ public class UserService {
      * @return Found user in REST compliant model
      * @throws EntityNotFoundException when no user is found for the requested id
      */
-    public EntityModel<User> getUserById(Long id) {
+    public UserModel getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(User.class, "id", id.toString()));
         return userModelAssembler.toModel(user);
@@ -50,7 +52,7 @@ public class UserService {
      * @param user user entity to persist - User
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<User> saveUser(User user) {
+    public UserModel saveUser(User user) {
         return userModelAssembler.toModel(userRepository.save(user));
     }
 
@@ -61,7 +63,7 @@ public class UserService {
      * @param id   Of the user entity to update
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<User> updateUser(User user, Long id) {
+    public UserModel updateUser(User user, Long id) {
         User updatedUser = userRepository.findById(id)
                 .map(foundUser -> {
                     foundUser.setFirstname(user.getFirstname());
