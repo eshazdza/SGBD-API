@@ -1,42 +1,17 @@
 package com.ronfas.SGBDAPI.test;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ronfas.SGBDAPI.classes.Classes;
-import com.ronfas.SGBDAPI.inscription.Inscription;
+import com.ronfas.SGBDAPI.classes.Classe;
 import com.ronfas.SGBDAPI.userTest.UserTest;
+import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-public class Test {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Test extends RepresentationModel<Test> {
     private Long id;
-
     private Date date;
-
-    @NotNull(message = "Classe is mandatory")
-    @ManyToOne
-    @JoinColumn(name = "class_uid", referencedColumnName = "uid")
-    @JsonIgnoreProperties({"testsList"})
-    private Classes classe;
-
-    @OneToMany(mappedBy = "test")
-    @JsonIgnoreProperties({"test", "id"})
+    private Classe classe;
     private List<UserTest> userTestList;
-
-    public Test(Long id, Date date, @NotNull(message = "Classe is mandatory") Classes classe, List<UserTest> userTestList) {
-        this.id = id;
-        this.date = date;
-        this.classe = classe;
-        this.userTestList = userTestList;
-    }
-
-    public Test() {
-    }
 
     public Long getId() {
         return id;
@@ -54,19 +29,19 @@ public class Test {
         this.date = date;
     }
 
-    public Classes getClasse() {
+    public Classe getClasse() {
         return classe;
     }
 
-    public void setClasse(Classes classe) {
+    public void setClasse(Classe classe) {
         this.classe = classe;
     }
 
-    public List<UserTest> getUserTestList() {
+    public List<UserTest> getUserTestModelList() {
         return userTestList;
     }
 
-    public void setUserTestList(List<UserTest> userTestList) {
+    public void setUserTestModelList(List<UserTest> userTestList) {
         this.userTestList = userTestList;
     }
 }

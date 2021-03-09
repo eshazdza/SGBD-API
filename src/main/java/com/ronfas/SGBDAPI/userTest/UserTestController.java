@@ -22,14 +22,14 @@ public class UserTestController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<UserTest>> all() {
+    CollectionModel<EntityModel<UserTestEntity>> all() {
         return CollectionModel.of(this.userTestService.getAllUserTests(), linkTo(
                 methodOn(UserTestController.class).all()).withSelfRel()
         );
     }
 
     @GetMapping("/{id}")
-    EntityModel<UserTest> one(
+    EntityModel<UserTestEntity> one(
             @PathVariable Long id
     ) {
         return this.userTestService.getUserTestById(id);
@@ -37,9 +37,9 @@ public class UserTestController {
 
     @PostMapping("")
     ResponseEntity<?> newUserTest(
-            @RequestBody @Valid UserTest newUserTest
+            @RequestBody @Valid UserTestEntity newUserTestEntity
     ) {
-        EntityModel<UserTest> userTestEntityModel = this.userTestService.saveUserTest(newUserTest);
+        EntityModel<UserTestEntity> userTestEntityModel = this.userTestService.saveUserTest(newUserTestEntity);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 userTestEntityModel
@@ -50,10 +50,10 @@ public class UserTestController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateUserTest(
-            @RequestBody @Valid UserTest userTest,
+            @RequestBody @Valid UserTestEntity userTestEntity,
             @PathVariable Long id
     ) {
-        EntityModel<UserTest> userTestEntityModel = this.userTestService.updateUserTest(userTest, id);
+        EntityModel<UserTestEntity> userTestEntityModel = this.userTestService.updateUserTest(userTestEntity, id);
 
         return ResponseEntity
                 .created(userTestEntityModel.getRequiredLink(

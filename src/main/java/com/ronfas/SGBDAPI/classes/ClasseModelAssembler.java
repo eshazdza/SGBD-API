@@ -1,11 +1,6 @@
 package com.ronfas.SGBDAPI.classes;
 
-import com.ronfas.SGBDAPI.user.User;
-import com.ronfas.SGBDAPI.user.UserController;
-import com.ronfas.SGBDAPI.user.UserModel;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
@@ -13,22 +8,22 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class ClassesModelAssembler extends RepresentationModelAssemblerSupport<Classes, ClasseModel> {
+public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<ClasseEntity, Classe> {
 
-    public ClassesModelAssembler() {
-        super(ClassesController.class, ClasseModel.class);
+    public ClasseModelAssembler() {
+        super(ClasseController.class, Classe.class);
     }
 
     @Override
-    public ClasseModel toModel(Classes classe) {
-        ClasseModel classeModel = instantiateModel(classe);
+    public Classe toModel(ClasseEntity classe) {
+        Classe classeModel = instantiateModel(classe);
         classeModel.add(
                 linkTo(
-                        methodOn(ClassesController.class)
+                        methodOn(ClasseController.class)
                                 .one(classe.getUid())
                 ).withSelfRel(),
                 linkTo(
-                        methodOn(ClassesController.class)
+                        methodOn(ClasseController.class)
                                 .all()
                 ).withRel("classes")
         );
@@ -40,11 +35,11 @@ public class ClassesModelAssembler extends RepresentationModelAssemblerSupport<C
     }
 
     @Override
-    public CollectionModel<ClasseModel> toCollectionModel(Iterable<? extends Classes> classes) {
-        CollectionModel<ClasseModel> classeModels = super.toCollectionModel(classes);
+    public CollectionModel<Classe> toCollectionModel(Iterable<? extends ClasseEntity> classes) {
+        CollectionModel<Classe> classeModels = super.toCollectionModel(classes);
         classeModels.add(
                 linkTo(
-                        methodOn(ClassesController.class)
+                        methodOn(ClasseController.class)
                                 .all()
                 ).withSelfRel());
 

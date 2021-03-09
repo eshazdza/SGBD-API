@@ -1,9 +1,6 @@
 package com.ronfas.SGBDAPI.role;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +21,13 @@ public class RoleController {
     }
 
     @GetMapping("")
-    CollectionModel<RoleModel> all() {
+    CollectionModel<Role> all() {
         return CollectionModel.of(this.roleService.getAllRoles(), linkTo(
                 methodOn(RoleController.class).all()).withSelfRel());
     }
 
     @GetMapping("/{id}")
-    RoleModel one(
+    Role one(
             @PathVariable Long id
     ) {
         return this.roleService.getRoleById(id);
@@ -38,9 +35,9 @@ public class RoleController {
 
     @PostMapping("")
     ResponseEntity<?> newRole(
-            @RequestBody @Valid Role newRole
+            @RequestBody @Valid RoleEntity newRoleEntity
     ) {
-        RoleModel roleEntityModel = this.roleService.saveRole(newRole);
+        Role roleEntityModel = this.roleService.saveRole(newRoleEntity);
 
         return ResponseEntity.created(
                 roleEntityModel
@@ -51,10 +48,10 @@ public class RoleController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateRole(
-            @RequestBody @Valid Role role,
+            @RequestBody @Valid RoleEntity roleEntity,
             @PathVariable Long id
     ) {
-        RoleModel roleEntityModel = this.roleService.updateRole(role, id);
+        Role roleEntityModel = this.roleService.updateRole(roleEntity, id);
 
         return ResponseEntity
                 .created(roleEntityModel.getRequiredLink(

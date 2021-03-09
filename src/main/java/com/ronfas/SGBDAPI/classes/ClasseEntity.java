@@ -2,8 +2,8 @@ package com.ronfas.SGBDAPI.classes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ronfas.SGBDAPI.inscription.Inscription;
-import com.ronfas.SGBDAPI.test.Test;
+import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
+import com.ronfas.SGBDAPI.test.TestEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-public class Classes {
+@Entity(name = "classes")
+public class ClasseEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -33,14 +33,14 @@ public class Classes {
 
     @OneToMany(mappedBy = "classe")
     @JsonIgnoreProperties({"classe", "id"})
-    private List<Inscription> usersList;
+    private List<InscriptionEntity> usersList;
 
     @OneToMany(mappedBy = "classe")
     @JsonIgnoreProperties({"classe", "id"})
     @JsonIgnore
-    private List<Test> testsList;
+    private List<TestEntity> testsList;
 
-    public Classes(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<Inscription> usersList, List<Test> testsList) {
+    public ClasseEntity(UUID uid, @NotBlank(message = "ID is mandatory") String id, @NotBlank(message = "Name is mandatory") String name, Date dateBegin, Date dateEnd, boolean currentFlag, List<InscriptionEntity> usersList, List<TestEntity> testsList) {
         this.uid = uid;
         this.id = id;
         this.name = name;
@@ -51,7 +51,7 @@ public class Classes {
         this.testsList = testsList;
     }
 
-    public Classes() {
+    public ClasseEntity() {
     }
 
     public UUID getUid() {
@@ -102,19 +102,19 @@ public class Classes {
         this.currentFlag = currentFlag;
     }
 
-    public List<Inscription> getUsersList() {
+    public List<InscriptionEntity> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<Inscription> usersList) {
+    public void setUsersList(List<InscriptionEntity> usersList) {
         this.usersList = usersList;
     }
 
-    public List<Test> getTestsList() {
+    public List<TestEntity> getTestsList() {
         return testsList;
     }
 
-    public void setTestsList(List<Test> testsList) {
+    public void setTestsList(List<TestEntity> testsList) {
         this.testsList = testsList;
     }
 }

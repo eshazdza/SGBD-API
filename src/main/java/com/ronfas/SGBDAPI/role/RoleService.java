@@ -3,11 +3,7 @@ package com.ronfas.SGBDAPI.role;
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
@@ -20,48 +16,48 @@ public class RoleService {
         this.roleModelAssembler = roleModelAssembler;
     }
 
-    public CollectionModel<RoleModel> getAllRoles() {
+    public CollectionModel<Role> getAllRoles() {
         return roleModelAssembler.toCollectionModel(roleRepository.findAll());
     }
 
 
-    public RoleModel getRoleById(Long id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Role.class, "id", id.toString()));
-        return roleModelAssembler.toModel(role);
+    public Role getRoleById(Long id) {
+        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(RoleEntity.class, "id", id.toString()));
+        return roleModelAssembler.toModel(roleEntity);
     }
 
-    public RoleModel getRoleByType(RoleType roleType) {
-        Role role = roleRepository.findByRoleType(roleType);
-        if (role == null){
-            throw new EntityNotFoundException(Role.class, "roleType", roleType.toString());
+    public Role getRoleByType(RoleType roleType) {
+        RoleEntity roleEntity = roleRepository.findByRoleType(roleType);
+        if (roleEntity == null){
+            throw new EntityNotFoundException(RoleEntity.class, "roleType", roleType.toString());
         }
-        return roleModelAssembler.toModel(role);
+        return roleModelAssembler.toModel(roleEntity);
     }
 
-    public RoleModel saveRole(Role role) {
-        return roleModelAssembler.toModel(roleRepository.save(role));
+    public Role saveRole(RoleEntity roleEntity) {
+        return roleModelAssembler.toModel(roleRepository.save(roleEntity));
     }
 
-    public RoleModel updateRole(Role role, Long id) {
-        Role updatedRole = roleRepository.findById(id)
+    public Role updateRole(RoleEntity roleEntity, Long id) {
+        RoleEntity updatedRoleEntity = roleRepository.findById(id)
                 .map(foundRole -> {
-                    foundRole.setDescription(role.getDescription());
-                    foundRole.setRoleType(role.getRoleType());
-                    foundRole.setUsersList(role.getUsersList());
+                    foundRole.setDescription(roleEntity.getDescription());
+                    foundRole.setRoleType(roleEntity.getRoleType());
+                    foundRole.setUsersList(roleEntity.getUsersList());
                     return roleRepository.save(foundRole);
                 })
                 .orElseGet(() -> {
-                    role.setId(id);
-                    return roleRepository.save(role);
+                    roleEntity.setId(id);
+                    return roleRepository.save(roleEntity);
                 });
-        return roleModelAssembler.toModel(updatedRole);
+        return roleModelAssembler.toModel(updatedRoleEntity);
     }
 
     public void deleteRole(Long id) {
         try {
             roleRepository.deleteById(id);
         } catch (EmptyResultDataAccessException exception) {
-            throw new EntityNotFoundException(Role.class, "id", id.toString());
+            throw new EntityNotFoundException(RoleEntity.class, "id", id.toString());
         }
     }
 }

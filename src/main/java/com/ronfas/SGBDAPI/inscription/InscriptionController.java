@@ -1,15 +1,11 @@
 package com.ronfas.SGBDAPI.inscription;
 
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/inscriptions")
@@ -21,12 +17,12 @@ public class InscriptionController {
     }
 
     @GetMapping("")
-    CollectionModel<InscriptionModel> all() {
+    CollectionModel<Inscription> all() {
         return inscriptionService.getAllInscriptions();
     }
 
     @GetMapping("/{id}")
-    InscriptionModel one(
+    Inscription one(
             @PathVariable Long id
     ) {
         return this.inscriptionService.getInscriptionById(id);
@@ -34,9 +30,9 @@ public class InscriptionController {
 
     @PostMapping("")
     ResponseEntity<?> newInscription(
-            @RequestBody @Valid Inscription newInscription
+            @RequestBody @Valid InscriptionEntity newInscriptionEntity
     ) {
-        InscriptionModel inscriptionEntityModel = this.inscriptionService.saveInscription(newInscription);
+        Inscription inscriptionEntityModel = this.inscriptionService.saveInscription(newInscriptionEntity);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 inscriptionEntityModel
@@ -47,16 +43,16 @@ public class InscriptionController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateInscription(
-            @RequestBody @Valid Inscription inscription,
+            @RequestBody @Valid InscriptionEntity inscriptionEntity,
             @PathVariable Long id
     ) {
-        InscriptionModel inscriptionEntityModel = this.inscriptionService.updateInscription(inscription, id);
+        Inscription inscriptionEntityModel = this.inscriptionService.updateInscription(inscriptionEntity, id);
 
         return ResponseEntity
                 .created(inscriptionEntityModel.getRequiredLink(
                         IanaLinkRelations.SELF
                         ).toUri()
-                ).body(inscription);
+                ).body(inscriptionEntity);
 
     }
 

@@ -24,7 +24,7 @@ public class TestService {
      *
      * @return List of Tests in REST compliant model
      */
-    public List<EntityModel<Test>> getAllTests() {
+    public List<EntityModel<TestEntity>> getAllTests() {
         return testRepository.findAll()
                 .stream()
                 .map(testModelAssembler::toModel)
@@ -38,42 +38,42 @@ public class TestService {
      * @return Found Tests in REST compliant model
      * @throws EntityNotFoundException when no Tests is found for the requested id
      */
-    public EntityModel<Test> getTestById(Long id) {
-        Test test = testRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(Test.class, "id", id.toString()));
-        return testModelAssembler.toModel(test);
+    public EntityModel<TestEntity> getTestById(Long id) {
+        TestEntity testEntity = testRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(TestEntity.class, "id", id.toString()));
+        return testModelAssembler.toModel(testEntity);
     }
 
     /**
      * Save the entity and creates a REST compliant model of said entity
      *
-     * @param test Tests entity to persist - Tests
+     * @param testEntity Tests entity to persist - Tests
      * @return REST compliant model of the persisted Tests
      */
-    public EntityModel<Test> saveTest(Test test) {
-        return testModelAssembler.toModel(testRepository.save(test));
+    public EntityModel<TestEntity> saveTest(TestEntity testEntity) {
+        return testModelAssembler.toModel(testRepository.save(testEntity));
     }
 
     /**
      * Updates or create Tests
      *
-     * @param test Tests entity to persist
+     * @param testEntity Tests entity to persist
      * @param id   Of the Tests entity to update
      * @return REST compliant model of the persisted Tests
      */
-    public EntityModel<Test> updateTest(Test test, Long id) {
-        Test updatedTest = testRepository.findById(id)
+    public EntityModel<TestEntity> updateTest(TestEntity testEntity, Long id) {
+        TestEntity updatedTestEntity = testRepository.findById(id)
                 .map(foundTest -> {
-                    foundTest.setDate(test.getDate());
-                    foundTest.setClasse(test.getClasse());
+                    foundTest.setDate(testEntity.getDate());
+                    foundTest.setClasse(testEntity.getClasse());
                     return testRepository.save(foundTest);
                 })
                 .orElseGet(() -> {
-                    test.setId(id);
-                    return testRepository.save(test);
+                    testEntity.setId(id);
+                    return testRepository.save(testEntity);
                 });
 
-        return testModelAssembler.toModel(updatedTest);
+        return testModelAssembler.toModel(updatedTestEntity);
     }
 
     /**
@@ -83,7 +83,7 @@ public class TestService {
         try {
             testRepository.deleteById(id);
         } catch (EmptyResultDataAccessException exception) {
-            throw new EntityNotFoundException(Test.class, "id", id.toString());
+            throw new EntityNotFoundException(TestEntity.class, "id", id.toString());
         }
     }
 }

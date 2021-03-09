@@ -1,53 +1,19 @@
 package com.ronfas.SGBDAPI.inscription;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ronfas.SGBDAPI.classes.Classes;
+import com.ronfas.SGBDAPI.classes.Classe;
 import com.ronfas.SGBDAPI.role.Role;
 import com.ronfas.SGBDAPI.user.User;
 import com.ronfas.SGBDAPI.userTest.UserTest;
+import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Entity(name = "user_cours")
-public class Inscription {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Inscription extends RepresentationModel<Inscription> {
     private Long id;
-
-    @NotNull(message = "User is mandatory.")
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @JsonIgnoreProperties("userCoursList")
     private User user;
-
-    @NotNull(message = "Class is mandatory.")
-    @ManyToOne(targetEntity = Classes.class)
-    @JoinColumn(name = "class_uid", referencedColumnName = "uid", nullable = false)
-    @JsonIgnoreProperties("usersList")
-    private Classes classe;
-
-    @NotNull(message = "Role is mandatory.")
-    @ManyToOne(targetEntity = Role.class)
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    @JsonIgnoreProperties("usersList")
+    private Classe classe;
     private Role role;
-
-    @OneToMany(mappedBy = "inscription")
-    @JsonIgnoreProperties({"inscription", "id"})
     private List<UserTest> userTestList;
-
-    public Inscription(Long id, User user, Classes classe, Role role) {
-        this.id = id;
-        this.user = user;
-        this.classe = classe;
-        this.role = role;
-    }
-
-    public Inscription() {
-
-    }
 
     public Long getId() {
         return id;
@@ -65,11 +31,11 @@ public class Inscription {
         this.user = user;
     }
 
-    public Classes getClasse() {
+    public Classe getClasse() {
         return classe;
     }
 
-    public void setClasse(Classes classe) {
+    public void setClasse(Classe classe) {
         this.classe = classe;
     }
 
@@ -79,5 +45,13 @@ public class Inscription {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<UserTest> getUserTestList() {
+        return userTestList;
+    }
+
+    public void setUserTestList(List<UserTest> userTestList) {
+        this.userTestList = userTestList;
     }
 }

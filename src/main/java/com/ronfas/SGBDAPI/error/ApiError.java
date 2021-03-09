@@ -1,6 +1,5 @@
 package com.ronfas.SGBDAPI.error;
 
-import net.minidev.json.JSONUtil;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;

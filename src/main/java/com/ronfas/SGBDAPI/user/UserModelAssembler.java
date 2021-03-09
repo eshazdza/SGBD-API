@@ -1,6 +1,5 @@
 package com.ronfas.SGBDAPI.user;
 
-import com.ronfas.SGBDAPI.inscription.InscriptionModelAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -14,23 +13,25 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
  */
 
 @Component
-public class UserModelAssembler extends RepresentationModelAssemblerSupport<User, UserModel> {
+public class UserModelAssembler extends RepresentationModelAssemblerSupport<UserEntity, User> {
 
-    private final InscriptionModelAssembler inscriptionModelAssembler;
-
-    public UserModelAssembler(InscriptionModelAssembler inscriptionModelAssembler) {
-        super(UserController.class, UserModel.class);
-        this.inscriptionModelAssembler = inscriptionModelAssembler;
+    public UserModelAssembler() {
+        super(UserController.class, User.class);
     }
 
-    @Override
-    public UserModel toModel(User user) {
+//
+//    public UserModelAssembler() {
+//        super(UserController.class, UserModel.class);
+//    }
 
-        UserModel userModel = instantiateModel(user);
-        userModel.add(
+    @Override
+    public User toModel(UserEntity userEntity) {
+
+        User user = instantiateModel(userEntity);
+        user.add(
                 linkTo(
                         methodOn(UserController.class)
-                                .one(user.getId())
+                                .one(userEntity.getId())
                 ).withSelfRel(),
                 linkTo(
                         methodOn(UserController.class)
@@ -38,25 +39,45 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
                 ).withRel("users")
         );
 
-        userModel.setId(user.getId());
-        userModel.setFirstname(user.getFirstname());
-        userModel.setLastname(user.getLastname());
-        userModel.setAdmin(user.isAdmin());
-//        userModel.setUserCoursList(toUserCoursModel(user.getUserCoursList()));
+        user.setId(userEntity.getId());
+        user.setFirstname(userEntity.getFirstname());
+        user.setLastname(userEntity.getLastname());
+        user.setAdmin(userEntity.isAdmin());
 
-        return userModel;
+        return user;
+    }
+
+    public User toShortModel(UserEntity userEntity){
+        User user = instantiateModel(userEntity);
+        user.add(
+                linkTo(
+                        methodOn(UserController.class)
+                                .one(userEntity.getId())
+                ).withSelfRel(),
+                linkTo(
+                        methodOn(UserController.class)
+                                .all()
+                ).withRel("users")
+        );
+
+        user.setId(userEntity.getId());
+        user.setFirstname(userEntity.getFirstname());
+        user.setLastname(userEntity.getLastname());
+        user.setAdmin(userEntity.isAdmin());
+
+        return user;
     }
 
     @Override
-    public CollectionModel<UserModel> toCollectionModel(Iterable<? extends User> users) {
-        CollectionModel<UserModel> userModels = super.toCollectionModel(users);
-        userModels.add(
+    public CollectionModel<User> toCollectionModel(Iterable<? extends UserEntity> usersEntity) {
+        CollectionModel<User> users = super.toCollectionModel(usersEntity);
+        users.add(
                 linkTo(
                         methodOn(UserController.class)
                                 .all()
                 ).withSelfRel());
 
-        return userModels;
+        return users;
     }
 
 //    private List<InscriptionModel> toUserCoursModel(List<Inscription> userCoursList) {

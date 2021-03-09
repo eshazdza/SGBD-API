@@ -1,7 +1,6 @@
 package com.ronfas.SGBDAPI.classes;
 
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,36 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
 @RestController
 @RequestMapping("/classes")
-public class ClassesController {
+public class ClasseController {
 
-    private final ClassesService classesService;
+    private final ClasseService classeService;
 
-    public ClassesController( ClassesService classesService) {
-        this.classesService = classesService;
+    public ClasseController(ClasseService classeService) {
+        this.classeService = classeService;
     }
 
     @GetMapping("")
-    CollectionModel<ClasseModel> all() {
-        return this.classesService.getAllClasses();
+    CollectionModel<Classe> all() {
+        return this.classeService.getAllClasses();
     }
 
     @GetMapping("/{uid}")
-    ClasseModel one(
+    Classe one(
             @PathVariable UUID uid
     ) {
-        return this.classesService.getClasseByUid(uid);
+        return this.classeService.getClasseByUid(uid);
     }
 
     @PostMapping("")
     ResponseEntity<?> newClasse (
-            @RequestBody @Valid Classes newClasse
+            @RequestBody @Valid ClasseEntity newClasse
     ) {
-        ClasseModel classesEntityModel = this.classesService.saveClasse(newClasse);
+        Classe classesEntityModel = this.classeService.saveClasse(newClasse);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 classesEntityModel
@@ -49,10 +45,10 @@ public class ClassesController {
 
     @PutMapping("/{uid}")
     ResponseEntity<?> updateClasse(
-            @RequestBody @Valid Classes classe,
+            @RequestBody @Valid ClasseEntity classe,
             @PathVariable UUID uid
     ) {
-        ClasseModel classesEntityModel = this.classesService.updateClasse(classe, uid);
+        Classe classesEntityModel = this.classeService.updateClasse(classe, uid);
 
         return ResponseEntity
                 .created(classesEntityModel.getRequiredLink(
@@ -66,7 +62,7 @@ public class ClassesController {
     ResponseEntity<?> delete(
             @PathVariable UUID uid
     ) {
-        classesService.deleteClasse(uid);
+        classeService.deleteClasse(uid);
         return ResponseEntity.noContent().build();
     }
 }

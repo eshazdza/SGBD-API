@@ -24,7 +24,7 @@ public class UserTestService {
      *
      * @return List of Users in REST compliant model
      */
-    public List<EntityModel<UserTest>> getAllUserTests() {
+    public List<EntityModel<UserTestEntity>> getAllUserTests() {
         return userTestRepository.findAll()
                 .stream()
                 .map(userTestModelAssembler::toModel)
@@ -38,44 +38,44 @@ public class UserTestService {
      * @return Found user in REST compliant model
      * @throws EntityNotFoundException when no user is found for the requested id
      */
-    public EntityModel<UserTest> getUserTestById(Long id) {
-        UserTest userTest = userTestRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(UserTest.class, "id", id.toString()));
-        return userTestModelAssembler.toModel(userTest);
+    public EntityModel<UserTestEntity> getUserTestById(Long id) {
+        UserTestEntity userTestEntity = userTestRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(UserTestEntity.class, "id", id.toString()));
+        return userTestModelAssembler.toModel(userTestEntity);
     }
 
     /**
      * Save the entity and creates a REST compliant model of said entity
      *
-     * @param userTest user entity to persist - User
+     * @param userTestEntity user entity to persist - User
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<UserTest> saveUserTest(UserTest userTest) {
-        return userTestModelAssembler.toModel(userTestRepository.save(userTest));
+    public EntityModel<UserTestEntity> saveUserTest(UserTestEntity userTestEntity) {
+        return userTestModelAssembler.toModel(userTestRepository.save(userTestEntity));
     }
 
     /**
      * Updates or create user
      *
-     * @param userTest User entity to persist
+     * @param userTestEntity User entity to persist
      * @param id   Of the user entity to update
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<UserTest> updateUserTest(UserTest userTest, Long id) {
-        UserTest updatedUserTest = userTestRepository.findById(id)
+    public EntityModel<UserTestEntity> updateUserTest(UserTestEntity userTestEntity, Long id) {
+        UserTestEntity updatedUserTestEntity = userTestRepository.findById(id)
                 .map(foundUserTest -> {
-                    foundUserTest.setTest(userTest.getTest());
-                    foundUserTest.setInscription(userTest.getInscription());
-                    foundUserTest.setPoints(userTest.getPoints());
-                    foundUserTest.setPresent(userTest.isPresent());
+                    foundUserTest.setTest(userTestEntity.getTest());
+                    foundUserTest.setInscription(userTestEntity.getInscription());
+                    foundUserTest.setPoints(userTestEntity.getPoints());
+                    foundUserTest.setPresent(userTestEntity.isPresent());
                     return userTestRepository.save(foundUserTest);
                 })
                 .orElseGet(() -> {
-                    userTest.setId(id);
-                    return userTestRepository.save(userTest);
+                    userTestEntity.setId(id);
+                    return userTestRepository.save(userTestEntity);
                 });
 
-        return userTestModelAssembler.toModel(updatedUserTest);
+        return userTestModelAssembler.toModel(updatedUserTestEntity);
     }
 
     /**
@@ -85,7 +85,7 @@ public class UserTestService {
         try {
             userTestRepository.deleteById(id);
         } catch (EmptyResultDataAccessException exception) {
-            throw new EntityNotFoundException(UserTest.class, "id", id.toString());
+            throw new EntityNotFoundException(UserTestEntity.class, "id", id.toString());
         }
     }
 }

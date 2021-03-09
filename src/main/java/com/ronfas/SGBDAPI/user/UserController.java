@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -20,13 +18,13 @@ public class UserController {
     }
 
     @GetMapping("")
-    CollectionModel<UserModel> all() {
+    CollectionModel<User> all() {
         return this.userService.getAllUsers();
 
     }
 
     @GetMapping("/{id}")
-    UserModel one(
+    User one(
             @PathVariable Long id
     ) {
         return this.userService.getUserById(id);
@@ -34,9 +32,9 @@ public class UserController {
 
     @PostMapping("")
     ResponseEntity<?> newUser(
-            @RequestBody @Valid User newUser
+            @RequestBody @Valid UserEntity newUserEntity
     ) {
-        UserModel userEntityModel = this.userService.saveUser(newUser);
+        User userEntityModel = this.userService.saveUser(newUserEntity);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 userEntityModel
@@ -47,10 +45,10 @@ public class UserController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateUser(
-            @RequestBody @Valid User user,
+            @RequestBody @Valid UserEntity userEntity,
             @PathVariable Long id
     ) {
-        UserModel userEntityModel = this.userService.updateUser(user, id);
+        User userEntityModel = this.userService.updateUser(userEntity, id);
 
         return ResponseEntity
                 .created(userEntityModel.getRequiredLink(

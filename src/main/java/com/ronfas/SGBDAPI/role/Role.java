@@ -1,49 +1,14 @@
 package com.ronfas.SGBDAPI.role;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ronfas.SGBDAPI.error.InvalidRoleException;
 import com.ronfas.SGBDAPI.inscription.Inscription;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.List;
-
-@Entity
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Role extends RepresentationModel<Role> {
     private Long id;
-
-    @Column(unique = true)
-    @NotNull(message = "Role type is mandatory")
     private RoleType roleType;
-
-    @Column(unique = true)
-    @NotBlank(message = "Description is mandatory")
     private String description;
-
-    @OneToMany(mappedBy = "role")
-    @JsonIgnoreProperties({"id", "role"})
-    private List<Inscription> usersList;
-
-    public Role(Long id, @NotNull(message = "Role type is mandatory") RoleType roleType, @NotBlank(message = "Description is mandatory") String description, List<Inscription> usersList) {
-        this.id = id;
-        this.roleType = roleType;
-        this.description = description;
-        this.usersList = usersList;
-    }
-
-    public Role() {
-    }
-
-    public Role(String roleType) {
-        try {
-            this.roleType = RoleType.valueOf(roleType.toUpperCase());
-        } catch (IllegalArgumentException exception) {
-            throw new InvalidRoleException(Role.class, "roleType", roleType);
-        }
-    }
+    private CollectionModel<Inscription> userList;
 
     public Long getId() {
         return id;
@@ -69,11 +34,11 @@ public class Role {
         this.description = description;
     }
 
-    public List<Inscription> getUsersList() {
-        return usersList;
+    public CollectionModel<Inscription> getUserList() {
+        return userList;
     }
 
-    public void setUsersList(List<Inscription> usersList) {
-        this.usersList = usersList;
+    public void setUserList(CollectionModel<Inscription> userList) {
+        this.userList = userList;
     }
 }

@@ -1,21 +1,12 @@
 package com.ronfas.SGBDAPI.test;
 
-import com.ronfas.SGBDAPI.error.EntityNotFoundException;
-import com.ronfas.SGBDAPI.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -31,7 +22,7 @@ public class TestController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<Test>> all() {
+    CollectionModel<EntityModel<TestEntity>> all() {
         return CollectionModel.of(testService.getAllTests(), linkTo(
                 methodOn(TestController.class).all()).withSelfRel()
         );
@@ -39,7 +30,7 @@ public class TestController {
 
 
     @GetMapping("/{id}")
-    EntityModel<Test> one(
+    EntityModel<TestEntity> one(
             @PathVariable Long id
     ) {
         return testService.getTestById(id);
@@ -48,9 +39,9 @@ public class TestController {
 
     @PostMapping("")
     ResponseEntity<?> newTest(
-            @RequestBody Test newTest
+            @RequestBody TestEntity newTestEntity
     ) {
-        EntityModel<Test> testEntityModel = testService.saveTest(newTest);
+        EntityModel<TestEntity> testEntityModel = testService.saveTest(newTestEntity);
 
         return ResponseEntity.created(
                 testEntityModel
@@ -61,10 +52,10 @@ public class TestController {
 
     @PutMapping("/{id}")
     ResponseEntity<?> updateTest(
-            @RequestBody @Valid Test test,
+            @RequestBody @Valid TestEntity testEntity,
             @PathVariable Long id
     ) {
-        EntityModel<Test> testEntityModel = this.testService.updateTest(test, id);
+        EntityModel<TestEntity> testEntityModel = this.testService.updateTest(testEntity, id);
 
         return ResponseEntity
                 .created(testEntityModel.getRequiredLink(

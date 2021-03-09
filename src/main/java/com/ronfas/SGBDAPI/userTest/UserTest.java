@@ -1,42 +1,15 @@
 package com.ronfas.SGBDAPI.userTest;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.test.Test;
+import org.springframework.hateoas.RepresentationModel;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
-@Entity
-public class UserTest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class UserTest extends RepresentationModel<UserTest> {
     private Long id;
-
     private Long points;
     private boolean present;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "test_id", referencedColumnName = "id")
-    @JsonIgnoreProperties({"classe", "userTestList"})
     private Test test;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "inscription_id", referencedColumnName = "id")
     private Inscription inscription;
-
-    public UserTest(Long id, Long points, boolean present, Test test, Inscription inscription) {
-        this.id = id;
-        this.points = points;
-        this.present = present;
-        this.test = test;
-        this.inscription = inscription;
-    }
-
-    public UserTest() {
-    }
 
     public Long getId() {
         return id;
