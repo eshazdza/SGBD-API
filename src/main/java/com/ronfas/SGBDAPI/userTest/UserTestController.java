@@ -22,14 +22,14 @@ public class UserTestController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<UserTestEntity>> all() {
+    CollectionModel<UserTest> all() {
         return CollectionModel.of(this.userTestService.getAllUserTests(), linkTo(
                 methodOn(UserTestController.class).all()).withSelfRel()
         );
     }
 
     @GetMapping("/{id}")
-    EntityModel<UserTestEntity> one(
+    UserTest one(
             @PathVariable Long id
     ) {
         return this.userTestService.getUserTestById(id);
@@ -39,7 +39,7 @@ public class UserTestController {
     ResponseEntity<?> newUserTest(
             @RequestBody @Valid UserTestEntity newUserTestEntity
     ) {
-        EntityModel<UserTestEntity> userTestEntityModel = this.userTestService.saveUserTest(newUserTestEntity);
+        UserTest userTestEntityModel = this.userTestService.saveUserTest(newUserTestEntity);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 userTestEntityModel
@@ -53,7 +53,7 @@ public class UserTestController {
             @RequestBody @Valid UserTestEntity userTestEntity,
             @PathVariable Long id
     ) {
-        EntityModel<UserTestEntity> userTestEntityModel = this.userTestService.updateUserTest(userTestEntity, id);
+       UserTest userTestEntityModel = this.userTestService.updateUserTest(userTestEntity, id);
 
         return ResponseEntity
                 .created(userTestEntityModel.getRequiredLink(

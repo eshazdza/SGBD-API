@@ -2,11 +2,9 @@ package com.ronfas.SGBDAPI.test;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TestService {
@@ -24,11 +22,8 @@ public class TestService {
      *
      * @return List of Tests in REST compliant model
      */
-    public List<EntityModel<TestEntity>> getAllTests() {
-        return testRepository.findAll()
-                .stream()
-                .map(testModelAssembler::toModel)
-                .collect(Collectors.toList());
+    public CollectionModel<Test> getAllTests() {
+        return testModelAssembler.toCollectionModel(testRepository.findAll());
     }
 
     /**
@@ -38,7 +33,7 @@ public class TestService {
      * @return Found Tests in REST compliant model
      * @throws EntityNotFoundException when no Tests is found for the requested id
      */
-    public EntityModel<TestEntity> getTestById(Long id) {
+    public Test getTestById(Long id) {
         TestEntity testEntity = testRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(TestEntity.class, "id", id.toString()));
         return testModelAssembler.toModel(testEntity);
@@ -50,7 +45,7 @@ public class TestService {
      * @param testEntity Tests entity to persist - Tests
      * @return REST compliant model of the persisted Tests
      */
-    public EntityModel<TestEntity> saveTest(TestEntity testEntity) {
+    public Test saveTest(TestEntity testEntity) {
         return testModelAssembler.toModel(testRepository.save(testEntity));
     }
 
@@ -61,7 +56,7 @@ public class TestService {
      * @param id   Of the Tests entity to update
      * @return REST compliant model of the persisted Tests
      */
-    public EntityModel<TestEntity> updateTest(TestEntity testEntity, Long id) {
+    public Test updateTest(TestEntity testEntity, Long id) {
         TestEntity updatedTestEntity = testRepository.findById(id)
                 .map(foundTest -> {
                     foundTest.setDate(testEntity.getDate());

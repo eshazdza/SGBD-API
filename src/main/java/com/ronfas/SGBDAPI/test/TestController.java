@@ -22,7 +22,7 @@ public class TestController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<TestEntity>> all() {
+    CollectionModel<Test> all() {
         return CollectionModel.of(testService.getAllTests(), linkTo(
                 methodOn(TestController.class).all()).withSelfRel()
         );
@@ -30,7 +30,7 @@ public class TestController {
 
 
     @GetMapping("/{id}")
-    EntityModel<TestEntity> one(
+    Test one(
             @PathVariable Long id
     ) {
         return testService.getTestById(id);
@@ -41,7 +41,7 @@ public class TestController {
     ResponseEntity<?> newTest(
             @RequestBody TestEntity newTestEntity
     ) {
-        EntityModel<TestEntity> testEntityModel = testService.saveTest(newTestEntity);
+        Test testEntityModel = testService.saveTest(newTestEntity);
 
         return ResponseEntity.created(
                 testEntityModel
@@ -55,7 +55,7 @@ public class TestController {
             @RequestBody @Valid TestEntity testEntity,
             @PathVariable Long id
     ) {
-        EntityModel<TestEntity> testEntityModel = this.testService.updateTest(testEntity, id);
+        Test testEntityModel = this.testService.updateTest(testEntity, id);
 
         return ResponseEntity
                 .created(testEntityModel.getRequiredLink(

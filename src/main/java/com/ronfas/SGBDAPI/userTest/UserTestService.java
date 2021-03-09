@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.userTest;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,8 @@ public class UserTestService {
      *
      * @return List of Users in REST compliant model
      */
-    public List<EntityModel<UserTestEntity>> getAllUserTests() {
-        return userTestRepository.findAll()
-                .stream()
-                .map(userTestModelAssembler::toModel)
-                .collect(Collectors.toList());
+    public CollectionModel<UserTest> getAllUserTests() {
+        return userTestModelAssembler.toCollectionModel(userTestRepository.findAll());
     }
 
     /**
@@ -38,7 +36,7 @@ public class UserTestService {
      * @return Found user in REST compliant model
      * @throws EntityNotFoundException when no user is found for the requested id
      */
-    public EntityModel<UserTestEntity> getUserTestById(Long id) {
+    public UserTest getUserTestById(Long id) {
         UserTestEntity userTestEntity = userTestRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(UserTestEntity.class, "id", id.toString()));
         return userTestModelAssembler.toModel(userTestEntity);
@@ -50,7 +48,7 @@ public class UserTestService {
      * @param userTestEntity user entity to persist - User
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<UserTestEntity> saveUserTest(UserTestEntity userTestEntity) {
+    public UserTest saveUserTest(UserTestEntity userTestEntity) {
         return userTestModelAssembler.toModel(userTestRepository.save(userTestEntity));
     }
 
@@ -58,10 +56,10 @@ public class UserTestService {
      * Updates or create user
      *
      * @param userTestEntity User entity to persist
-     * @param id   Of the user entity to update
+     * @param id             Of the user entity to update
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<UserTestEntity> updateUserTest(UserTestEntity userTestEntity, Long id) {
+    public UserTest updateUserTest(UserTestEntity userTestEntity, Long id) {
         UserTestEntity updatedUserTestEntity = userTestRepository.findById(id)
                 .map(foundUserTest -> {
                     foundUserTest.setTest(userTestEntity.getTest());
