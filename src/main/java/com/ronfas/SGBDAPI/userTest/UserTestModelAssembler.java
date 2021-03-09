@@ -1,12 +1,6 @@
 package com.ronfas.SGBDAPI.userTest;
 
-import com.ronfas.SGBDAPI.inscription.Inscription;
-import com.ronfas.SGBDAPI.inscription.InscriptionController;
-import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
-import com.ronfas.SGBDAPI.user.UserEntity;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 

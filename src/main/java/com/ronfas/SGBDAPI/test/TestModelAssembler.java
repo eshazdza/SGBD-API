@@ -1,6 +1,5 @@
 package com.ronfas.SGBDAPI.test;
 
-import com.ronfas.SGBDAPI.inscription.Inscription;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
