@@ -1,8 +1,5 @@
 package com.ronfas.SGBDAPI.inscription;
 
-import com.ronfas.SGBDAPI.classes.ClasseModelAssembler;
-import com.ronfas.SGBDAPI.role.RoleModelAssembler;
-import com.ronfas.SGBDAPI.user.UserModelAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
@@ -13,15 +10,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class InscriptionModelAssembler extends RepresentationModelAssemblerSupport<InscriptionEntity, Inscription> {
 
-    private final ClasseModelAssembler classeModelAssembler;
-    private final UserModelAssembler userModelAssembler;
-    private final RoleModelAssembler roleModelAssembler;
-
-    public InscriptionModelAssembler(ClasseModelAssembler classeModelAssembler, UserModelAssembler userModelAssembler, RoleModelAssembler roleModelAssembler) {
+    public InscriptionModelAssembler() {
         super(InscriptionController.class, Inscription.class);
-        this.classeModelAssembler = classeModelAssembler;
-        this.userModelAssembler = userModelAssembler;
-        this.roleModelAssembler = roleModelAssembler;
     }
 
     @Override
@@ -39,9 +29,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         );
 
         inscription.setId(inscriptionEntity.getId());
-        inscription.setClasse(classeModelAssembler.toModel(inscriptionEntity.getClasse()));
-        inscription.setUser(userModelAssembler.toShortModel(inscriptionEntity.getUser()));
-        inscription.setRole(roleModelAssembler.toModel(inscriptionEntity.getRole()));
+//        TODO SETTERS
 
         return inscription;
     }
@@ -57,6 +45,4 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         );
         return inscriptionModels;
     }
-//    TODO lists and relations
-
 }

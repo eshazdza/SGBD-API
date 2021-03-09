@@ -29,7 +29,7 @@ public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<Cl
         );
 
         classeModel.setId(classe.getId());
-        // SETTERS
+//        TODO SETTERS
 
         return classeModel;
     }
@@ -45,6 +45,4 @@ public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<Cl
 
         return classeModels;
     }
-
-//    Lists & relations to model
 }

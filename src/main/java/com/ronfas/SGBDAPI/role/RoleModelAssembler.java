@@ -10,13 +10,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class RoleModelAssembler extends RepresentationModelAssemblerSupport<RoleEntity, Role> {
 
-//    private final InscriptionModelAssembler inscriptionModelAssembler;
-//
-//    public RoleModelAssembler(InscriptionModelAssembler inscriptionModelAssembler) {
-//        super(RoleController.class, RoleModel.class);
-//        this.inscriptionModelAssembler = inscriptionModelAssembler;
-//    }
-
     public RoleModelAssembler() {
         super(RoleController.class, Role.class);
     }
@@ -36,9 +29,7 @@ public class RoleModelAssembler extends RepresentationModelAssemblerSupport<Role
         );
 
         role.setId(roleEntity.getId());
-        role.setDescription(roleEntity.getDescription());
-        role.setRoleType(roleEntity.getRoleType());
-//        roleModel.setUserList(inscriptionModelAssembler.toCollectionModel(role.getUsersList()));
+//        TODO SETTERS
 
         return role;
     }

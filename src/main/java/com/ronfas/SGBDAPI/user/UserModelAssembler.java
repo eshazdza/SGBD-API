@@ -19,11 +19,6 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         super(UserController.class, User.class);
     }
 
-//
-//    public UserModelAssembler() {
-//        super(UserController.class, UserModel.class);
-//    }
-
     @Override
     public User toModel(UserEntity userEntity) {
 
@@ -40,30 +35,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         );
 
         user.setId(userEntity.getId());
-        user.setFirstname(userEntity.getFirstname());
-        user.setLastname(userEntity.getLastname());
-        user.setAdmin(userEntity.isAdmin());
-
-        return user;
-    }
-
-    public User toShortModel(UserEntity userEntity){
-        User user = instantiateModel(userEntity);
-        user.add(
-                linkTo(
-                        methodOn(UserController.class)
-                                .one(userEntity.getId())
-                ).withSelfRel(),
-                linkTo(
-                        methodOn(UserController.class)
-                                .all()
-                ).withRel("users")
-        );
-
-        user.setId(userEntity.getId());
-        user.setFirstname(userEntity.getFirstname());
-        user.setLastname(userEntity.getLastname());
-        user.setAdmin(userEntity.isAdmin());
+//        TODO SETTERS
 
         return user;
     }
