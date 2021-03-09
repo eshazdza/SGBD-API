@@ -51,4 +51,5 @@ public class ClassesModelAssembler extends RepresentationModelAssemblerSupport<C
         return classeModels;
     }
 
+//    Lists & relations to model
 }

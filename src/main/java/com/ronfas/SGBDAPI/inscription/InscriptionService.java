@@ -3,6 +3,7 @@ package com.ronfas.SGBDAPI.inscription;
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,12 @@ public class InscriptionService {
      *
      * @return List of Inscriptions in REST compliant model
      */
-    public List<EntityModel<Inscription>> getAllInscriptions() {
-        return inscriptionRepository.findAll()
-                .stream()
-                .map(inscriptionModelAssembler::toModel)
-                .collect(Collectors.toList());
+    public CollectionModel<InscriptionModel> getAllInscriptions() {
+        return inscriptionModelAssembler.toCollectionModel(inscriptionRepository.findAll());
+//        return inscriptionRepository.findAll()
+//                .stream()
+//                .map(inscriptionModelAssembler::toModel)
+//                .collect(Collectors.toList());
     }
 
     /**
@@ -39,7 +41,7 @@ public class InscriptionService {
      * @return Found inscription in REST compliant model
      * @throws EntityNotFoundException when no user is found for the requested id
      */
-    public EntityModel<Inscription> getInscriptionById(Long id) {
+    public InscriptionModel getInscriptionById(Long id) {
         Inscription inscription = inscriptionRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(Inscription.class, "id", id.toString()));
         return inscriptionModelAssembler.toModel(inscription);
@@ -51,7 +53,7 @@ public class InscriptionService {
      * @param inscription inscription entity to persist - User
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<Inscription> saveInscription(Inscription inscription) {
+    public InscriptionModel saveInscription(Inscription inscription) {
         return inscriptionModelAssembler.toModel(inscriptionRepository.save(inscription));
     }
 
@@ -62,11 +64,11 @@ public class InscriptionService {
      * @param id          Of the inscription entity to update
      * @return REST compliant model of the persisted user
      */
-    public EntityModel<Inscription> updateInscription(Inscription inscription, Long id) {
+    public InscriptionModel updateInscription(Inscription inscription, Long id) {
         Inscription updatedInscription = inscriptionRepository.findById(id)
                 .map(foundInscription -> {
                     // TODO SET foundInscription.setblablab(babma)
-                     return inscriptionRepository.save(foundInscription);
+                    return inscriptionRepository.save(foundInscription);
                 })
                 .orElseGet(() -> {
                     inscription.setId(id);

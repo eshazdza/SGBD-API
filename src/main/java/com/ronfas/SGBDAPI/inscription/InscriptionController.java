@@ -21,14 +21,12 @@ public class InscriptionController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<Inscription>> all() {
-        return CollectionModel.of(this.inscriptionService.getAllInscriptions(), linkTo(
-                methodOn(InscriptionController.class).all()).withSelfRel()
-        );
+    CollectionModel<InscriptionModel> all() {
+        return inscriptionService.getAllInscriptions();
     }
 
     @GetMapping("/{id}")
-    EntityModel<Inscription> one(
+    InscriptionModel one(
             @PathVariable Long id
     ) {
         return this.inscriptionService.getInscriptionById(id);
@@ -38,7 +36,7 @@ public class InscriptionController {
     ResponseEntity<?> newInscription(
             @RequestBody @Valid Inscription newInscription
     ) {
-        EntityModel<Inscription> inscriptionEntityModel = this.inscriptionService.saveInscription(newInscription);
+        InscriptionModel inscriptionEntityModel = this.inscriptionService.saveInscription(newInscription);
 //      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
         return ResponseEntity.created(
                 inscriptionEntityModel
@@ -52,7 +50,7 @@ public class InscriptionController {
             @RequestBody @Valid Inscription inscription,
             @PathVariable Long id
     ) {
-        EntityModel<Inscription> inscriptionEntityModel = this.inscriptionService.updateInscription(inscription, id);
+        InscriptionModel inscriptionEntityModel = this.inscriptionService.updateInscription(inscription, id);
 
         return ResponseEntity
                 .created(inscriptionEntityModel.getRequiredLink(
