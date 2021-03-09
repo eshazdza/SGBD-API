@@ -24,13 +24,13 @@ public class RoleController {
     }
 
     @GetMapping("")
-    CollectionModel<EntityModel<Role>> all() {
+    CollectionModel<RoleModel> all() {
         return CollectionModel.of(this.roleService.getAllRoles(), linkTo(
                 methodOn(RoleController.class).all()).withSelfRel());
     }
 
     @GetMapping("/{id}")
-    EntityModel<Role> one(
+    RoleModel one(
             @PathVariable Long id
     ) {
         return this.roleService.getRoleById(id);
@@ -40,7 +40,7 @@ public class RoleController {
     ResponseEntity<?> newRole(
             @RequestBody @Valid Role newRole
     ) {
-        EntityModel<Role> roleEntityModel = this.roleService.saveRole(newRole);
+        RoleModel roleEntityModel = this.roleService.saveRole(newRole);
 
         return ResponseEntity.created(
                 roleEntityModel
@@ -54,7 +54,7 @@ public class RoleController {
             @RequestBody @Valid Role role,
             @PathVariable Long id
     ) {
-        EntityModel<Role> roleEntityModel = this.roleService.updateRole(role, id);
+        RoleModel roleEntityModel = this.roleService.updateRole(role, id);
 
         return ResponseEntity
                 .created(roleEntityModel.getRequiredLink(

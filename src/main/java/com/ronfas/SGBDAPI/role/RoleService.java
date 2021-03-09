@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.role;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +20,17 @@ public class RoleService {
         this.roleModelAssembler = roleModelAssembler;
     }
 
-    public List<EntityModel<Role>> getAllRoles() {
-        return roleRepository.findAll()
-                .stream()
-                .map(roleModelAssembler::toModel)
-                .collect(Collectors.toList());
+    public CollectionModel<RoleModel> getAllRoles() {
+        return roleModelAssembler.toCollectionModel(roleRepository.findAll());
     }
 
 
-    public EntityModel<Role> getRoleById(Long id) {
+    public RoleModel getRoleById(Long id) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Role.class, "id", id.toString()));
         return roleModelAssembler.toModel(role);
     }
 
-    public EntityModel<Role> getRoleByType(RoleType roleType) {
+    public RoleModel getRoleByType(RoleType roleType) {
         Role role = roleRepository.findByRoleType(roleType);
         if (role == null){
             throw new EntityNotFoundException(Role.class, "roleType", roleType.toString());
@@ -40,11 +38,11 @@ public class RoleService {
         return roleModelAssembler.toModel(role);
     }
 
-    public EntityModel<Role> saveRole(Role role) {
+    public RoleModel saveRole(Role role) {
         return roleModelAssembler.toModel(roleRepository.save(role));
     }
 
-    public EntityModel<Role> updateRole(Role role, Long id) {
+    public RoleModel updateRole(Role role, Long id) {
         Role updatedRole = roleRepository.findById(id)
                 .map(foundRole -> {
                     foundRole.setDescription(role.getDescription());

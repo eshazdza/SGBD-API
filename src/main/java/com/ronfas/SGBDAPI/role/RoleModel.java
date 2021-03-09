@@ -1,15 +1,14 @@
 package com.ronfas.SGBDAPI.role;
 
 import com.ronfas.SGBDAPI.inscription.InscriptionModel;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.RepresentationModel;
-
-import java.util.List;
 
 public class RoleModel extends RepresentationModel<RoleModel> {
     private Long id;
     private RoleType roleType;
     private String description;
-    private List<InscriptionModel> userList;
+    private CollectionModel<InscriptionModel> userList;
 
     public Long getId() {
         return id;
@@ -35,11 +34,11 @@ public class RoleModel extends RepresentationModel<RoleModel> {
         this.description = description;
     }
 
-    public List<InscriptionModel> getUserList() {
+    public CollectionModel<InscriptionModel> getUserList() {
         return userList;
     }
 
-    public void setUserList(List<InscriptionModel> userList) {
+    public void setUserList(CollectionModel<InscriptionModel> userList) {
         this.userList = userList;
     }
 }

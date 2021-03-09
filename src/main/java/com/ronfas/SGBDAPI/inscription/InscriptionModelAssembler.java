@@ -43,6 +43,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         inscriptionModel.setClasse(classesModelAssembler.toModel(inscription.getClasse()));
         inscriptionModel.setUser(userModelAssembler.toModel(inscription.getUser()));
 //        inscriptionModel.setRole();
+//        TODO set role
 
         return inscriptionModel;
     }
@@ -58,5 +59,6 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         );
         return inscriptionModels;
     }
+//    TODO lists and relations
 
 }
