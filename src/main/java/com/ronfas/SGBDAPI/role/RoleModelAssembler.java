@@ -29,7 +29,10 @@ public class RoleModelAssembler extends RepresentationModelAssemblerSupport<Role
         );
 
         role.setId(roleEntity.getId());
-//        TODO SETTERS
+        role.setRoleType(roleEntity.getRoleType());
+        role.setDescription(roleEntity.getDescription());
+
+//        TODO SETTERS RELATIONS
 
         return role;
     }

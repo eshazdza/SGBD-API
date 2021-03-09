@@ -29,7 +29,13 @@ public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<Cl
         );
 
         classeModel.setId(classe.getId());
-//        TODO SETTERS
+        classeModel.setUuid(classe.getUid());
+        classeModel.setName(classe.getName());
+        classeModel.setDateBegin(classe.getDateBegin());
+        classeModel.setDateEnd(classe.getDateEnd());
+        classeModel.setCurrentFlag(classe.isCurrentFlag());
+
+//        TODO SETTERS RELATIONS
 
         return classeModel;
     }

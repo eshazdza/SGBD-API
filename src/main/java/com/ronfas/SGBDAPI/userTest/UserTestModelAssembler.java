@@ -29,7 +29,9 @@ public class UserTestModelAssembler extends RepresentationModelAssemblerSupport<
         );
 
         userTest.setId(userTestEntity.getId());
-//        TODO SETTERS
+        userTest.setPoints(userTestEntity.getPoints());
+        userTest.setPresent(userTestEntity.isPresent());
+//        TODO SETTERS RELATIONS
 
         return userTest;
     }

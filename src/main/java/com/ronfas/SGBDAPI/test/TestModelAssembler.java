@@ -29,7 +29,9 @@ public class TestModelAssembler extends RepresentationModelAssemblerSupport<Test
         );
 
         test.setId(testEntity.getId());
-//        TODO SETTERS
+        test.setDate(testEntity.getDate());
+
+//        TODO SETTERS RELATIONS
 
         return test;
     }

@@ -35,7 +35,11 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         );
 
         user.setId(userEntity.getId());
-//        TODO SETTERS
+        user.setLastname(userEntity.getLastname());
+        user.setFirstname(userEntity.getFirstname());
+        user.setAdmin(user.isAdmin());
+
+//        TODO SETTERS RELATIONS
 
         return user;
     }

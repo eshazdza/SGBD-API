@@ -29,7 +29,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         );
 
         inscription.setId(inscriptionEntity.getId());
-//        TODO SETTERS
+//        TODO SETTERS RELATIONS
 
         return inscription;
     }
