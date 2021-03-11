@@ -17,7 +17,7 @@ public class InscriptionController {
     }
 
     @GetMapping("")
-    CollectionModel<Inscription> all() {
+    public CollectionModel<Inscription> all() {
         return inscriptionService.getAllInscriptions();
     }
 

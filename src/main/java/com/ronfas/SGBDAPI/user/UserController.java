@@ -18,7 +18,7 @@ public class UserController {
     }
 
     @GetMapping("")
-    CollectionModel<User> all() {
+    public CollectionModel<User> all() {
         return this.userService.getAllUsers();
 
     }

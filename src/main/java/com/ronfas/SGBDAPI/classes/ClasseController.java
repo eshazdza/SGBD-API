@@ -19,7 +19,7 @@ public class ClasseController {
     }
 
     @GetMapping("")
-    CollectionModel<Classe> all() {
+    public CollectionModel<Classe> all() {
         return this.classeService.getAllClasses();
     }
 

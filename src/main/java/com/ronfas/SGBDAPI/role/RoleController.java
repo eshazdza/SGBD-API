@@ -21,7 +21,7 @@ public class RoleController {
     }
 
     @GetMapping("")
-    CollectionModel<Role> all() {
+    public CollectionModel<Role> all() {
         return CollectionModel.of(this.roleService.getAllRoles(), linkTo(
                 methodOn(RoleController.class).all()).withSelfRel());
     }

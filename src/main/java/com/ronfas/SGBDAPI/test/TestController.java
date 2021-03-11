@@ -22,7 +22,7 @@ public class TestController {
     }
 
     @GetMapping("")
-    CollectionModel<Test> all() {
+    public CollectionModel<Test> all() {
         return CollectionModel.of(testService.getAllTests(), linkTo(
                 methodOn(TestController.class).all()).withSelfRel()
         );

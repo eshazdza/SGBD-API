@@ -78,7 +78,11 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
                 linkTo(
                         methodOn(UserController.class)
                                 .one(user.getId())
-                ).withSelfRel()
+                ).withSelfRel(),
+                linkTo(
+                        methodOn(UserController.class)
+                                .all()
+                ).withRel("users")
         );
         return user;
     }
@@ -96,7 +100,11 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
                 linkTo(
                         methodOn(ClasseController.class)
                         .one(classe.getUuid())
-                ).withSelfRel()
+                ).withSelfRel(),
+                linkTo(
+                        methodOn(ClasseController.class)
+                                .all()
+                ).withRel("classes")
         );
 
         return classe;
@@ -111,7 +119,11 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
                 linkTo(
                         methodOn(RoleController.class)
                         .one(role.getId())
-                ).withSelfRel()
+                ).withSelfRel(),
+                linkTo(
+                        methodOn(RoleController.class)
+                                .all()
+                ).withRel("roles")
         );
         return role;
     }
@@ -131,7 +143,11 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
                             linkTo(
                                     methodOn(UserTestController.class)
                                     .one(userTest.getId())
-                            ).withSelfRel()
+                            ).withSelfRel(),
+                            linkTo(
+                                    methodOn(UserTestController.class)
+                                            .all()
+                            ).withRel("usertests")
                     );
                     return userTest;
                 })
@@ -146,7 +162,11 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
                 linkTo(
                         methodOn(TestController.class)
                         .one(test.getId())
-                ).withSelfRel()
+                ).withSelfRel(),
+                linkTo(
+                        methodOn(TestController.class)
+                                .all()
+                ).withRel("tests")
         );
         return test;
     }
