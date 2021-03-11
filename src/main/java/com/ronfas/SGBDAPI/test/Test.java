@@ -37,11 +37,11 @@ public class Test extends RepresentationModel<Test> {
         this.classe = classe;
     }
 
-    public List<UserTest> getUserTestModelList() {
+    public List<UserTest> getUserTestList() {
         return userTestList;
     }
 
-    public void setUserTestModelList(List<UserTest> userTestList) {
+    public void setUserTestList(List<UserTest> userTestList) {
         this.userTestList = userTestList;
     }
 }

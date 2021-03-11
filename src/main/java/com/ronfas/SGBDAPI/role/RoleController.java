@@ -27,7 +27,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    Role one(
+    public Role one(
             @PathVariable Long id
     ) {
         return this.roleService.getRoleById(id);

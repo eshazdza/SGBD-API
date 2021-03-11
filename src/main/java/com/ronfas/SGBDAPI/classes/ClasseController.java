@@ -24,7 +24,7 @@ public class ClasseController {
     }
 
     @GetMapping("/{uid}")
-    Classe one(
+    public Classe one(
             @PathVariable UUID uid
     ) {
         return this.classeService.getClasseByUid(uid);

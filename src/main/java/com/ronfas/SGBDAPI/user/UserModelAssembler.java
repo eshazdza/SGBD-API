@@ -7,7 +7,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +45,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         user.setLastname(userEntity.getLastname());
         user.setFirstname(userEntity.getFirstname());
         user.setAdmin(userEntity.isAdmin());
-        user.setInscriptionList(toInscriptionModel(userEntity.getInscriptionList()));
+        user.setInscriptionList(toInscriptionListModel(userEntity.getInscriptionList()));
 
         return user;
     }
@@ -63,7 +62,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         return users;
     }
 
-    private List<Inscription> toInscriptionModel(List<InscriptionEntity> inscriptionEntities) {
+    private List<Inscription> toInscriptionListModel(List<InscriptionEntity> inscriptionEntities) {
         if (inscriptionEntities.isEmpty())
             return Collections.emptyList();
 
@@ -71,6 +70,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
                 .map(inscriptionEntity -> {
                     Inscription inscription = new Inscription();
                     inscription.setId(inscriptionEntity.getId());
+
                     inscription.add(
                             linkTo(
                                     methodOn(InscriptionController.class)

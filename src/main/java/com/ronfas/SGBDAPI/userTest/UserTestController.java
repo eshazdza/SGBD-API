@@ -29,7 +29,7 @@ public class UserTestController {
     }
 
     @GetMapping("/{id}")
-    UserTest one(
+    public UserTest one(
             @PathVariable Long id
     ) {
         return this.userTestService.getUserTestById(id);

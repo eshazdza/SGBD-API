@@ -30,7 +30,7 @@ public class TestController {
 
 
     @GetMapping("/{id}")
-    Test one(
+    public Test one(
             @PathVariable Long id
     ) {
         return testService.getTestById(id);
