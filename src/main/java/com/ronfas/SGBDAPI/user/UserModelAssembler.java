@@ -1,8 +1,16 @@
 package com.ronfas.SGBDAPI.user;
 
+import com.ronfas.SGBDAPI.inscription.Inscription;
+import com.ronfas.SGBDAPI.inscription.InscriptionController;
+import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -37,9 +45,8 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         user.setId(userEntity.getId());
         user.setLastname(userEntity.getLastname());
         user.setFirstname(userEntity.getFirstname());
-        user.setAdmin(user.isAdmin());
-
-//        TODO SETTERS RELATIONS
+        user.setAdmin(userEntity.isAdmin());
+        user.setInscriptionList(toInscriptionModel(userEntity.getInscriptionList()));
 
         return user;
     }
@@ -56,14 +63,22 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
         return users;
     }
 
-//    private List<InscriptionModel> toUserCoursModel(List<Inscription> userCoursList) {
-//        if (userCoursList.isEmpty())
-//            return Collections.emptyList();
-//
-//        return userCoursList.stream()
-//                .map(inscriptionModelAssembler::toModel)
-//                .collect(Collectors.toList());
-//    }
+    private List<Inscription> toInscriptionModel(List<InscriptionEntity> inscriptionEntities) {
+        if (inscriptionEntities.isEmpty())
+            return Collections.emptyList();
 
-
+        return inscriptionEntities.stream()
+                .map(inscriptionEntity -> {
+                    Inscription inscription = new Inscription();
+                    inscription.setId(inscriptionEntity.getId());
+                    inscription.add(
+                            linkTo(
+                                    methodOn(InscriptionController.class)
+                                            .one(inscription.getId())
+                            ).withSelfRel()
+                    );
+                    return inscription;
+                })
+                .collect(Collectors.toList());
+    }
 }

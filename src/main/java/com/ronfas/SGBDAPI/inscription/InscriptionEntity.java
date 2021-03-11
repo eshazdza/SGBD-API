@@ -80,4 +80,28 @@ public class InscriptionEntity {
     public void setRole(RoleEntity roleEntity) {
         this.roleEntity = roleEntity;
     }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public RoleEntity getRoleEntity() {
+        return roleEntity;
+    }
+
+    public void setRoleEntity(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+    }
+
+    public List<UserTestEntity> getUserTestEntityList() {
+        return userTestEntityList;
+    }
+
+    public void setUserTestEntityList(List<UserTestEntity> userTestEntityList) {
+        this.userTestEntityList = userTestEntityList;
+    }
 }

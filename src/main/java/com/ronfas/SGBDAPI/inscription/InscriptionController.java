@@ -22,7 +22,7 @@ public class InscriptionController {
     }
 
     @GetMapping("/{id}")
-    Inscription one(
+    public Inscription one(
             @PathVariable Long id
     ) {
         return this.inscriptionService.getInscriptionById(id);

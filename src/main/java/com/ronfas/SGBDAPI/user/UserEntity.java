@@ -26,14 +26,14 @@ public class UserEntity {
 
     @OneToMany(mappedBy = "userEntity")
     @JsonIgnoreProperties({"id", "userEntity"})
-    private List<InscriptionEntity> userCoursList;
+    private List<InscriptionEntity> inscriptionList;
 
-    public UserEntity(Long id, @NotBlank(message = "Firstname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String firstname, @NotBlank(message = "Lastname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String lastname, boolean isAdmin, List<InscriptionEntity> userCoursList) {
+    public UserEntity(Long id, @NotBlank(message = "Firstname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String firstname, @NotBlank(message = "Lastname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String lastname, boolean isAdmin, List<InscriptionEntity> inscriptionList) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.isAdmin = isAdmin;
-        this.userCoursList = userCoursList;
+        this.inscriptionList = inscriptionList;
     }
 
     public UserEntity() {
@@ -72,11 +72,11 @@ public class UserEntity {
         isAdmin = admin;
     }
 
-    public List<InscriptionEntity> getUserCoursList() {
-        return userCoursList;
+    public List<InscriptionEntity> getInscriptionList() {
+        return inscriptionList;
     }
 
-    public void setUserCoursList(List<InscriptionEntity> userCoursList) {
-        this.userCoursList = userCoursList;
+    public void setInscriptionList(List<InscriptionEntity> userCoursList) {
+        this.inscriptionList = userCoursList;
     }
 }
