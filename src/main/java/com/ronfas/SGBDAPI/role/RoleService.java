@@ -43,7 +43,7 @@ public class RoleService {
                 .map(foundRole -> {
                     foundRole.setDescription(roleEntity.getDescription());
                     foundRole.setRoleType(roleEntity.getRoleType());
-                    foundRole.setUsersList(roleEntity.getUsersList());
+                    foundRole.setUserList(roleEntity.getUserList());
                     return roleRepository.save(foundRole);
                 })
                 .orElseGet(() -> {

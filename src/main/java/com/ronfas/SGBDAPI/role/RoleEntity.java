@@ -25,13 +25,13 @@ public class RoleEntity {
 
     @OneToMany(mappedBy = "roleEntity")
     @JsonIgnoreProperties({"id", "roleEntity"})
-    private List<InscriptionEntity> usersList;
+    private List<InscriptionEntity> userList;
 
-    public RoleEntity(Long id, @NotNull(message = "Role type is mandatory") RoleType roleType, @NotBlank(message = "Description is mandatory") String description, List<InscriptionEntity> usersList) {
+    public RoleEntity(Long id, @NotNull(message = "Role type is mandatory") RoleType roleType, @NotBlank(message = "Description is mandatory") String description, List<InscriptionEntity> userList) {
         this.id = id;
         this.roleType = roleType;
         this.description = description;
-        this.usersList = usersList;
+        this.userList = userList;
     }
 
     public RoleEntity() {
@@ -69,11 +69,11 @@ public class RoleEntity {
         this.description = description;
     }
 
-    public List<InscriptionEntity> getUsersList() {
-        return usersList;
+    public List<InscriptionEntity> getUserList() {
+        return userList;
     }
 
-    public void setUsersList(List<InscriptionEntity> usersList) {
-        this.usersList = usersList;
+    public void setUserList(List<InscriptionEntity> usersList) {
+        this.userList = usersList;
     }
 }
