@@ -1,6 +1,57 @@
-p{
-    color: red;
+header {
+    text-align: center;
+    margin-bottom: 10cm;
 }
-h1{
-    color:red;
+
+.subheader{
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+}
+
+.details {
+    width: 100%;
+}
+
+.bulletin-details {
+    border: 1px solid black;
+    display: inline-block;
+    width: 40%;
+    height: 160px;
+    margin: auto;
+}
+
+.student-details {
+    border: 1px solid black;
+    display: inline;
+    width: 40%;
+    height: 160px;
+    vertical-align: top;
+    float: right;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    border: 1px solid black;
+}
+
+.matiere{
+    width: 30px;
+}
+
+.ptsEleve{
+    width: 5px;
+}
+
+.ptsClasse{
+    width: 5px;
+}
+
+.other{
+    width: 100px;
 }

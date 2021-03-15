@@ -8,42 +8,70 @@
 <body>
 
 <header>
-    <h1 th:text="${schoolName}">
+    <h1> IEPSCF
+        <span class="sub">Namur Cadets</span>
     </h1>
-    <div class="details">
-        <div class="bulletin-details">
-            <ul>
-                <li>
-                    <p>School year : </p>
-                </li>
-                <li>
-                    <p>date gen </p>
-                </li>
-            </ul>
-        </div>
-        <div class="student-details">
-            <ul>
-                <li>
-                    <p>firstname : </p>
-                </li>
-                <li>
-                    <p>Lastname : </p>
-                </li>
-                <li>
-                    <p>nb class : </p>
-                </li>
-                <li>
-                    <p>nb abs : </p>
-                </li>
-            </ul>
+</header>
+<main>
+    <div class="subheader">
+        <div class="details">
+            <div class="bulletin-details">
+                <ul>
+                    <li>
+                        <p>School year : </p>
+                    </li>
+                    <li>
+                        <p>date gen </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="student-details">
+                <ul>
+                    <li>
+                        <p>firstname : ${studentFirstName}</p>
+                    </li>
+                    <li>
+                        <p>Lastname : ${studentLastName}</p>
+                    </li>
+                    <li>
+                        <p>nb class : ${studentNbClasses}</p>
+                    </li>
+                    <li>
+                        <p>nb abs : ${studentNbAbs}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+    <div class="content">
+        <table>
+            <thead>
+            <tr>
+                <th class="matiere">
+                    <p>Matière</p>
+                </th>
+                <th class="ptsEleve">
+                    <p>Points Elève</p>
+                </th>
+                <th class="ptsClasse">
+                    <p>Moyenne Classe</p>
+                </th>
+                <th class="other">
+                    <p></p>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    math
+                </td>
+            </tr>
+            </tbody>
 
-</header>
+        </table>
 
-<main>
-
-
+    </div>
 </main>
 
 
