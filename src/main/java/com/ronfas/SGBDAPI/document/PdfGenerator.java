@@ -19,7 +19,7 @@ public class PdfGenerator {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public void createPdf(String templateName, Map map) throws Exception {
+    public UUID createPdf(String templateName, Map map) throws Exception {
         Assert.notNull(templateName, "Template name cannot be null");
 
 //        Load data Map into Context
@@ -34,13 +34,14 @@ public class PdfGenerator {
 
 //        Generate html from template name and context
         String processedHtml = templateEngine.process(templateName, context);
-        System.out.println(processedHtml);
 //        Create file
         FileOutputStream outputStream = null;
-        String fileName = UUID.randomUUID().toString();
+        String basePath = "C:\\Users\\mEH\\Documents\\IEPSCF\\SGBD\\PROJET\\SGBD-API\\tmp\\";
+        UUID fileName = UUID.randomUUID();
+        String path = basePath+fileName.toString()+".pdf";
 
         try {
-            final File outPutFile = File.createTempFile(fileName, ".pdf");
+            final File outPutFile = new File(path);
             System.out.println(outPutFile.getAbsolutePath());
             outputStream = new FileOutputStream(outPutFile);
             ITextRenderer renderer = new ITextRenderer();
@@ -48,7 +49,7 @@ public class PdfGenerator {
             renderer.layout();
             renderer.createPDF(outputStream, false);
             renderer.finishPDF();
-            System.out.println("PDF created ");
+            return fileName;
         } finally {
             if (outputStream != null) {
                 try {

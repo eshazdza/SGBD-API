@@ -14,6 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
+import java.io.FileNotFoundException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -79,6 +80,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             EntityNotFoundException ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    protected ResponseEntity<Object> handleFileNotFound(
+            FileNotFoundException ex
+    ){
+        ApiError apiError = new ApiError(HttpStatus.OK);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
