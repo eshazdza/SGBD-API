@@ -1,12 +1,16 @@
 package com.ronfas.SGBDAPI.document;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,10 +46,9 @@ public class PdfGenerator {
 
         try {
             final File outPutFile = new File(path);
-            System.out.println(outPutFile.getAbsolutePath());
             outputStream = new FileOutputStream(outPutFile);
             ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocumentFromString(processedHtml);
+            renderer.setDocumentFromString(processedHtml, new ClassPathResource("/pdf-resources/").getURL().toExternalForm());
             renderer.layout();
             renderer.createPDF(outputStream, false);
             renderer.finishPDF();
