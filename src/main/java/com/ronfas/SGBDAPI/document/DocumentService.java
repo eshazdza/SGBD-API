@@ -20,8 +20,7 @@ public class DocumentService {
         Map<String, String> data = new HashMap<>();
         data.put("schoolName", "IEPSCF");
         try {
-//            return pdfGenerator.createPdf("bulletin-template.html", data);
-            return pdfGenerator.createPdf("test.html", data);
+            return pdfGenerator.createPdf("bulletin-template.html", data);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
