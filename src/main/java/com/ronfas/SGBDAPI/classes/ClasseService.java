@@ -67,7 +67,6 @@ public class ClasseService {
                     foundClass.setDateEnd(classeEntity.getDateEnd());
                     foundClass.setUsersList(classeEntity.getUsersList());
                     foundClass.setCurrentFlag(classeEntity.isCurrentFlag());
-                    foundClass.setUid(classeEntity.getUid());
                     return classeRepository.save(foundClass);
                 })
                 .orElseGet(() -> {
