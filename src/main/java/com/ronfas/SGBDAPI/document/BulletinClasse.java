@@ -8,6 +8,7 @@ public class BulletinClasse {
     private Long pointsAverage;
     private Long studentPoints;
     private String comment;
+    private int missedTest;
 
     public BulletinClasse() {
     }
@@ -66,5 +67,13 @@ public class BulletinClasse {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public int getMissedTest() {
+        return missedTest;
+    }
+
+    public void setMissedTest(int missedTest) {
+        this.missedTest = missedTest;
     }
 }

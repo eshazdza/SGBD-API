@@ -68,7 +68,11 @@ public class DocumentService {
             Long total = 0L;
             for (UserTest userTest : userTestList) {
                 total += userTest.getPoints();
+                if (!userTest.isPresent()) {
+//                    todo compute missed test
+                }
             }
+//            Change return and structure
             return (total / userTestList.size());
         }
     }
