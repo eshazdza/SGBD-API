@@ -35,10 +35,9 @@ public class DocumentService {
         bulletin.setStudentFirstName(user.getFirstname());
         bulletin.setStudentLastName(user.getLastname());
 
-        BulletinClasse classe = new BulletinClasse();
-
         for (Inscription inscription :
                 user.getInscriptionList()) {
+            BulletinClasse classe = new BulletinClasse();
             classe.setId(inscription.getClasse().getId());
             classe.setName(inscription.getClasse().getName());
             classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
