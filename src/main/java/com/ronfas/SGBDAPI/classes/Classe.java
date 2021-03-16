@@ -4,6 +4,7 @@ import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.test.Test;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -15,8 +16,8 @@ public class Classe extends RepresentationModel<Classe> {
     private Date dateBegin;
     private Date dateEnd;
     private boolean currentFlag;
-    private List<Inscription> userList;
-    private List<Test> testList;
+    private List<Inscription> userList = new ArrayList<>();
+    private List<Test> testList = new ArrayList<>();
 
     public UUID getUuid() {
         return uuid;

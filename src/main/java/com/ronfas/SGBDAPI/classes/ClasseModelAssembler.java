@@ -73,7 +73,7 @@ public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<Cl
 
 
     private List<Inscription> toUserListModel(List<InscriptionEntity> userEntityList) {
-        if (userEntityList.isEmpty())
+        if (userEntityList == null || userEntityList.isEmpty())
             return Collections.emptyList();
 
         return userEntityList.stream()
@@ -81,7 +81,7 @@ public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<Cl
     }
 
     private List<Test> toTestListModel(List<TestEntity> testEntityList) {
-        if (testEntityList.isEmpty())
+        if (testEntityList == null || testEntityList.isEmpty())
             return Collections.emptyList();
 
         return testEntityList.stream()
@@ -106,7 +106,7 @@ public class ClasseModelAssembler extends RepresentationModelAssemblerSupport<Cl
     }
 
     private List<UserTest> toUserTestListModel(List<UserTestEntity> userTestEntities) {
-        if (userTestEntities.isEmpty())
+        if (userTestEntities == null || userTestEntities.isEmpty())
             return Collections.emptyList();
 
         return userTestEntities.stream()
