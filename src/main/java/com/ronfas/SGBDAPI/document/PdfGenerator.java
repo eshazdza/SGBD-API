@@ -1,29 +1,24 @@
 package com.ronfas.SGBDAPI.document;
 
+import com.itextpdf.html2pdf.ConverterProperties;
+import com.itextpdf.html2pdf.HtmlConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
 
 @Component
 public class PdfGenerator {
     @Autowired
     private TemplateEngine templateEngine;
 
-    public UUID createPdf(String templateName, Map map) throws Exception {
+    public byte[] createPdf(String templateName, Map map) throws Exception {
         Assert.notNull(templateName, "Template name cannot be null");
 
 //        Load data Map into Context
@@ -38,29 +33,18 @@ public class PdfGenerator {
 
 //        Generate html from template name and context
         String processedHtml = templateEngine.process(templateName, context);
-//        Create file
-        FileOutputStream outputStream = null;
-        String basePath = "C:\\Users\\mEH\\Documents\\IEPSCF\\SGBD\\PROJET\\SGBD-API\\tmp\\";
-        UUID fileName = UUID.randomUUID();
-        String path = basePath+fileName.toString()+".pdf";
 
-        try {
-            final File outPutFile = new File(path);
-            outputStream = new FileOutputStream(outPutFile);
-            ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocumentFromString(processedHtml, new ClassPathResource("/pdf-resources/").getURL().toExternalForm());
-            renderer.layout();
-            renderer.createPDF(outputStream, false);
-            renderer.finishPDF();
-            return fileName;
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                }
-            }
-        }
+//        Create file
+        ByteArrayOutputStream target = new ByteArrayOutputStream();
+
+        String uri =  new ClassPathResource("/pdf-resources/").getURL().toExternalForm();
+
+        ConverterProperties converterProperties = new ConverterProperties();
+        converterProperties.setBaseUri(uri);
+
+        HtmlConverter.convertToPdf(processedHtml, target, converterProperties);
+        return target.toByteArray();
+
     }
 
 }

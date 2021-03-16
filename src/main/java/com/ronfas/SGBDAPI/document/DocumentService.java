@@ -16,11 +16,12 @@ public class DocumentService {
     @Autowired
     private PdfGenerator pdfGenerator;
 
-    public UUID createDocForUser(Long id) {
+    public byte[] createDocForUser(Long id) {
         Map<String, String> data = new HashMap<>();
         data.put("schoolName", "IEPSCF");
         try {
-            return pdfGenerator.createPdf("bulletin-template.html", data);
+//            return pdfGenerator.createPdf("bulletin-template.html", data);
+            return pdfGenerator.createPdf("test.html", data);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

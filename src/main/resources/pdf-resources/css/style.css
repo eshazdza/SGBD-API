@@ -1,10 +1,7 @@
 header {
     text-align: center;
-    margin-bottom: 10cm;
-}
-
-.subheader{
-    margin-bottom: 20px;
+    margin-bottom: 1cm;
+    color: red;
 }
 
 ul {
@@ -12,46 +9,17 @@ ul {
 }
 
 .details {
-    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .bulletin-details {
     border: 1px solid black;
-    display: inline-block;
-    width: 40%;
-    height: 160px;
-    margin: auto;
+    max-width: 40%;
 }
 
 .student-details {
     border: 1px solid black;
-    display: inline;
-    width: 40%;
-    height: 160px;
-    vertical-align: top;
-    float: right;
-}
-
-table {
-    width: 100%;
-}
-
-th {
-    border: 1px solid black;
-}
-
-.matiere{
-    width: 30px;
-}
-
-.ptsEleve{
-    width: 5px;
-}
-
-.ptsClasse{
-    width: 5px;
-}
-
-.other{
-    width: 100px;
+    max-width: 40%;
 }

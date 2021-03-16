@@ -18,18 +18,15 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InputStreamResource> getDocumentByUser(
+    public ResponseEntity<?> getDocumentByUser(
             @PathVariable Long id
-    ) throws FileNotFoundException {
-        UUID docUuid = documentService.createDocForUser(id);
-        FileInputStream createdDoc = documentService.getDocByUuid(docUuid);
-        InputStreamResource inputStreamResource = new InputStreamResource(createdDoc);
+    ) {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setCacheControl(CacheControl.noCache().getHeaderValue());
-        httpHeaders.setContentDisposition(ContentDisposition.parse("attachment; filename=" + docUuid.toString() + ".pdf"));
+        httpHeaders.setContentDisposition(ContentDisposition.parse("attachment; filename=bulletin.pdf"));
 
-        return new ResponseEntity<>(inputStreamResource, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(documentService.createDocForUser(id), httpHeaders, HttpStatus.OK);
     }
 
 }
