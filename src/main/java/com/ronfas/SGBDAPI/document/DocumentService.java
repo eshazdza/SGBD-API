@@ -1,15 +1,20 @@
 package com.ronfas.SGBDAPI.document;
 
+import com.ronfas.SGBDAPI.classes.Classe;
+import com.ronfas.SGBDAPI.classes.ClasseEntity;
 import com.ronfas.SGBDAPI.classes.ClasseService;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.user.User;
+import com.ronfas.SGBDAPI.user.UserEntity;
 import com.ronfas.SGBDAPI.user.UserService;
+import com.ronfas.SGBDAPI.userTest.UserTest;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -42,7 +47,7 @@ public class DocumentService {
             classe.setName(inscription.getClasse().getName());
             classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
             classe.setTeacherLastName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getLastname());
-            classe.setStudentPoints(computeStudentPoints(id, inscription.getClasse().getUuid()));
+            classe.setStudentPoints(computeStudentPoints(inscription.getUserTestList()));
             bulletin.addClasse(classe);
         }
 
@@ -56,9 +61,18 @@ public class DocumentService {
         return null;
     }
 
-    private Long computeStudentPoints(Long studentId, UUID classeUuid) {
-        return 100L;
+    private Long computeStudentPoints(List<UserTest> userTestList) {
+        if (userTestList == null || userTestList.isEmpty()) {
+            return null;
+        } else {
+            Long total = 0L;
+            for (UserTest userTest : userTestList) {
+                total += userTest.getPoints();
+            }
+            return (total / userTestList.size());
+        }
     }
+
 
     public FileInputStream getDocByUuid(UUID uuid) throws FileNotFoundException {
         String basePath = "C:\\Users\\mEH\\Documents\\IEPSCF\\SGBD\\PROJET\\SGBD-API\\tmp\\";
