@@ -1,11 +1,7 @@
 package com.ronfas.SGBDAPI.document;
 
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.*;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/documents")
@@ -17,9 +13,9 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/user")
     public ResponseEntity<?> getDocumentByUser(
-            @PathVariable Long id
+            @RequestParam("id") long id
     ) {
 
         HttpHeaders httpHeaders = new HttpHeaders();

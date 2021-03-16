@@ -1,6 +1,8 @@
 package com.ronfas.SGBDAPI.classes;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
+import com.ronfas.SGBDAPI.user.User;
+import com.ronfas.SGBDAPI.user.UserEntity;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
@@ -10,10 +12,10 @@ import java.util.UUID;
 @Service
 public class ClasseService {
 
-    private final ClasseRepository classeRepository;
+    private final ClasseRepositoryInterface classeRepository;
     private final ClasseModelAssembler classeModelAssembler;
 
-    public ClasseService(ClasseRepository classeRepository, ClasseModelAssembler classeModelAssembler) {
+    public ClasseService(ClasseRepositoryInterface classeRepository, ClasseModelAssembler classeModelAssembler) {
         this.classeRepository = classeRepository;
         this.classeModelAssembler = classeModelAssembler;
     }
@@ -85,5 +87,14 @@ public class ClasseService {
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(ClasseEntity.class, "uid", uid.toString());
         }
+    }
+
+    /**
+     *
+     * @param uuid of the classe
+     * @return User the teacher of the classe
+     */
+    public UserEntity getTeacherForClasse(UUID uuid){
+        return classeRepository.findTeacherForClasse(uuid);
     }
 }

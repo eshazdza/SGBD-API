@@ -1,6 +1,9 @@
 package com.ronfas.SGBDAPI.document;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ronfas.SGBDAPI.classes.ClasseService;
+import com.ronfas.SGBDAPI.inscription.Inscription;
+import com.ronfas.SGBDAPI.user.User;
+import com.ronfas.SGBDAPI.user.UserService;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -13,12 +16,38 @@ import java.util.UUID;
 @Service
 public class DocumentService {
 
-    @Autowired
-    private PdfGenerator pdfGenerator;
+    private final PdfGenerator pdfGenerator;
+    private final UserService userService;
+    private final ClasseService classeService;
+
+    public DocumentService(PdfGenerator pdfGenerator, UserService userService, ClasseService classeService) {
+        this.pdfGenerator = pdfGenerator;
+        this.userService = userService;
+        this.classeService = classeService;
+    }
 
     public byte[] createDocForUser(Long id) {
-        Map<String, String> data = new HashMap<>();
-        data.put("schoolName", "IEPSCF");
+        Map<String, Bulletin> data = new HashMap<>();
+
+        User user = userService.getUserById(id);
+
+        Bulletin bulletin = new Bulletin();
+        bulletin.setStudentFirstName(user.getFirstname());
+        bulletin.setStudentLastName(user.getLastname());
+
+        BulletinClasse classe = new BulletinClasse();
+
+        for (Inscription inscription :
+                user.getInscriptionList()) {
+            classe.setId(inscription.getClasse().getId());
+            classe.setName(inscription.getClasse().getName());
+            classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
+            bulletin.addClasse(classe);
+        }
+
+
+        data.put("bulletin", bulletin);
+
         try {
             return pdfGenerator.createPdf("bulletin-template.html", data);
         } catch (Exception e) {

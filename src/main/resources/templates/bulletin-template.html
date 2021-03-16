@@ -12,7 +12,7 @@
         <span class="sub">Namur Cadets</span>
     </h1>
 </header>
-<main>
+<main th:object="${bulletin}">
     <div class="subheader">
         <div class="details">
             <div class="bulletin-details">
@@ -28,10 +28,10 @@
             <div class="student-details">
                 <ul>
                     <li>
-                        <p>firstname : ${studentFirstName}</p>
+                        <p>Firstname : <span th:text="*{studentFirstName}"></span></p>
                     </li>
                     <li>
-                        <p>Lastname : ${studentLastName}</p>
+                        <p>Lastname : <span th:text="*{studentLastName}"></span></p>
                     </li>
                     <li>
                         <p>nb class : ${studentNbClasses}</p>
@@ -47,29 +47,32 @@
         <table cellpadding="0" cellspacing="0">
             <thead>
             <tr>
-                <th >
+                <th>
                     <p class="matiere">Matière</p>
                 </th>
-                <th >
+                <th>
                     <p class="ptsEleve">Points Elève</p>
                 </th>
-                <th >
+                <th>
                     <p class="ptsClasse">Moyenne Classe</p>
                 </th>
-                <th >
+                <th>
                     <p class="other">Commentaire</p>
                 </th>
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr th:each="classe : *{classes}">
+                <td th:text="${classe.teacherFirstName}">
+
+                </td>
                 <td>
                     math
-                </td> <td>
+                </td>
+                <td>
                     math
-                </td> <td>
-                    math
-                </td> <td>
+                </td>
+                <td>
                     math
                 </td>
             </tr>
