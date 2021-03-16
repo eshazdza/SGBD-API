@@ -63,17 +63,20 @@
             </thead>
             <tbody>
             <tr th:each="classe : *{classes}">
-                <td th:text="${classe.teacherFirstName}">
+                <td>
+                    <p class="classe-name"><span th:text="${classe.name}" class="classe-name"></span></p>
+                    <p class="classe-id"><span th:text="${classe.id}" class="classe-id"></span></p>
+                    <p class="prof-title">Professeur : <span th:text="${classe.teacherFirstName}" class="teacher-firstname"></span> <span th:text="${classe.teacherLastName}" class="teacher-lastname"></span></p>
 
                 </td>
                 <td>
-                    math
+                    <p class="student-points" th:text="${classe.studentPoints}"></p>
                 </td>
                 <td>
-                    math
+
                 </td>
                 <td>
-                    math
+
                 </td>
             </tr>
             </tbody>

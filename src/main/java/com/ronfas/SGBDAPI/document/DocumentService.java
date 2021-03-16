@@ -41,9 +41,10 @@ public class DocumentService {
             classe.setId(inscription.getClasse().getId());
             classe.setName(inscription.getClasse().getName());
             classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
+            classe.setTeacherLastName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getLastname());
+            classe.setStudentPoints(computeStudentPoints(id, inscription.getClasse().getUuid()));
             bulletin.addClasse(classe);
         }
-
 
         data.put("bulletin", bulletin);
 
@@ -53,6 +54,10 @@ public class DocumentService {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    private Long computeStudentPoints(Long studentId, UUID classeUuid) {
+        return 100L;
     }
 
     public FileInputStream getDocByUuid(UUID uuid) throws FileNotFoundException {
