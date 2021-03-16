@@ -92,7 +92,7 @@ public class TestModelAssembler extends RepresentationModelAssemblerSupport<Test
     }
 
     private List<UserTest> toUserTestModel(List<UserTestEntity> userTestListEntities) {
-        if (userTestListEntities.isEmpty())
+        if (userTestListEntities==null || userTestListEntities.isEmpty())
             return Collections.emptyList();
 
         return userTestListEntities.stream()

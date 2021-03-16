@@ -5,7 +5,6 @@ import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity(name = "user")
@@ -15,11 +14,9 @@ public class UserEntity {
     private Long id;
 
     @NotBlank(message = "Firstname is mandatory")
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String firstname;
 
     @NotBlank(message = "Lastname is mandatory")
-    @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.")
     private String lastname;
 
     private boolean isAdmin;
@@ -28,7 +25,7 @@ public class UserEntity {
     @JsonIgnoreProperties({"id", "userEntity"})
     private List<InscriptionEntity> inscriptionList;
 
-    public UserEntity(Long id, @NotBlank(message = "Firstname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String firstname, @NotBlank(message = "Lastname is mandatory") @Pattern(regexp = "^[a-zA-Z]*$", message = "No numbers or special chars allowed.") String lastname, boolean isAdmin, List<InscriptionEntity> inscriptionList) {
+    public UserEntity(Long id, @NotBlank(message = "Firstname is mandatory") String firstname, @NotBlank(message = "Lastname is mandatory") String lastname, boolean isAdmin, List<InscriptionEntity> inscriptionList) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;

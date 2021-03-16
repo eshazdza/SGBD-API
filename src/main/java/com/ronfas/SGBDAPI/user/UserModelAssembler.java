@@ -75,7 +75,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
     }
 
     private List<Inscription> toInscriptionListModel(List<InscriptionEntity> inscriptionEntities) {
-        if (inscriptionEntities.isEmpty())
+        if (inscriptionEntities == null || inscriptionEntities.isEmpty())
             return Collections.emptyList();
 
         return inscriptionEntities.stream()
@@ -142,7 +142,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
     }
 
     private List<UserTest> toUserTestListModel(List<UserTestEntity> userTestEntities) {
-        if (userTestEntities.isEmpty())
+        if (userTestEntities == null || userTestEntities.isEmpty())
             return Collections.emptyList();
 
         return userTestEntities.stream()
@@ -178,7 +178,7 @@ public class UserModelAssembler extends RepresentationModelAssemblerSupport<User
                 ).withSelfRel(),
                 linkTo(
                         methodOn(TestController.class)
-                        .all()
+                                .all()
                 ).withRel("tests")
         );
         return test;

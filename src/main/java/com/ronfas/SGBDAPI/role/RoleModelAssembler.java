@@ -61,13 +61,14 @@ public class RoleModelAssembler extends RepresentationModelAssemblerSupport<Role
         );
         return roleModels;
     }
-         private List<Inscription> toUserListModel(List<InscriptionEntity> userEntityList) {
-            if (userEntityList.isEmpty())
-                return Collections.emptyList();
 
-            return userEntityList.stream()
-                    .map(this::toInscriptionModel).collect(Collectors.toList());
-        }
+    private List<Inscription> toUserListModel(List<InscriptionEntity> userEntityList) {
+        if (userEntityList == null || userEntityList.isEmpty())
+            return Collections.emptyList();
+
+        return userEntityList.stream()
+                .map(this::toInscriptionModel).collect(Collectors.toList());
+    }
 
 
     private Inscription toInscriptionModel(InscriptionEntity inscriptionEntity) {

@@ -99,7 +99,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         classe.add(
                 linkTo(
                         methodOn(ClasseController.class)
-                        .one(classe.getUuid())
+                                .one(classe.getUuid())
                 ).withSelfRel(),
                 linkTo(
                         methodOn(ClasseController.class)
@@ -118,7 +118,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         role.add(
                 linkTo(
                         methodOn(RoleController.class)
-                        .one(role.getId())
+                                .one(role.getId())
                 ).withSelfRel(),
                 linkTo(
                         methodOn(RoleController.class)
@@ -129,7 +129,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
     }
 
     private List<UserTest> toUserTestListModel(List<UserTestEntity> userTestEntities) {
-        if (userTestEntities.isEmpty())
+        if (userTestEntities == null || userTestEntities.isEmpty())
             return Collections.emptyList();
 
         return userTestEntities.stream()
@@ -142,7 +142,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
                     userTest.add(
                             linkTo(
                                     methodOn(UserTestController.class)
-                                    .one(userTest.getId())
+                                            .one(userTest.getId())
                             ).withSelfRel(),
                             linkTo(
                                     methodOn(UserTestController.class)
@@ -161,7 +161,7 @@ public class InscriptionModelAssembler extends RepresentationModelAssemblerSuppo
         test.add(
                 linkTo(
                         methodOn(TestController.class)
-                        .one(test.getId())
+                                .one(test.getId())
                 ).withSelfRel(),
                 linkTo(
                         methodOn(TestController.class)
