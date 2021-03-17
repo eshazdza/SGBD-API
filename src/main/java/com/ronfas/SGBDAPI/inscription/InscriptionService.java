@@ -84,4 +84,9 @@ public class InscriptionService {
             throw new EntityNotFoundException(InscriptionEntity.class, "id", id.toString());
         }
     }
+
+    public InscriptionEntity getInscriptionEntityById(Long id) {
+        return inscriptionRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(InscriptionEntity.class, "id", id.toString()));
+    }
 }

@@ -81,4 +81,9 @@ public class TestService {
             throw new EntityNotFoundException(TestEntity.class, "id", id.toString());
         }
     }
+
+    public TestEntity getTestEntityById(Long id) {
+        return testRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(TestEntity.class, "id", id.toString()));
+    }
 }
