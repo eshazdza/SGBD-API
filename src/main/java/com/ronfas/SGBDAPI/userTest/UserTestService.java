@@ -1,23 +1,28 @@
 package com.ronfas.SGBDAPI.userTest;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
+import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
+import com.ronfas.SGBDAPI.inscription.InscriptionService;
+import com.ronfas.SGBDAPI.test.TestEntity;
+import com.ronfas.SGBDAPI.test.TestService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserTestService {
 
     private final UserTestRepository userTestRepository;
     private final UserTestModelAssembler userTestModelAssembler;
+    private final TestService testService;
+    private final InscriptionService inscriptionService;
 
-    public UserTestService(UserTestRepository userTestRepository, UserTestModelAssembler userTestModelAssembler) {
+    public UserTestService(UserTestRepository userTestRepository, UserTestModelAssembler userTestModelAssembler, TestService testService, InscriptionService inscriptionService) {
         this.userTestRepository = userTestRepository;
         this.userTestModelAssembler = userTestModelAssembler;
+        this.testService = testService;
+        this.inscriptionService = inscriptionService;
     }
 
     /**
@@ -49,6 +54,10 @@ public class UserTestService {
      * @return REST compliant model of the persisted user
      */
     public UserTest saveUserTest(UserTestEntity userTestEntity) {
+        TestEntity testEntity = testService.getTestEntityById(userTestEntity.getTest().getId());
+        userTestEntity.setTest(testEntity);
+        InscriptionEntity inscriptionEntity = inscriptionService.getInscriptionEntityById(userTestEntity.getInscription().getId());
+        userTestEntity.setInscription(inscriptionEntity);
         return userTestModelAssembler.toModel(userTestRepository.save(userTestEntity));
     }
 
