@@ -1,11 +1,8 @@
 package com.ronfas.SGBDAPI.document;
 
-import com.ronfas.SGBDAPI.classes.Classe;
-import com.ronfas.SGBDAPI.classes.ClasseEntity;
 import com.ronfas.SGBDAPI.classes.ClasseService;
 import com.ronfas.SGBDAPI.inscription.Inscription;
 import com.ronfas.SGBDAPI.user.User;
-import com.ronfas.SGBDAPI.user.UserEntity;
 import com.ronfas.SGBDAPI.user.UserService;
 import com.ronfas.SGBDAPI.userTest.UserTest;
 import org.springframework.stereotype.Service;
@@ -13,10 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DocumentService {
@@ -39,6 +33,7 @@ public class DocumentService {
         Bulletin bulletin = new Bulletin();
         bulletin.setStudentFirstName(user.getFirstname());
         bulletin.setStudentLastName(user.getLastname());
+        bulletin.setDateGen(new Date());
 
         for (Inscription inscription :
                 user.getInscriptionList()) {
