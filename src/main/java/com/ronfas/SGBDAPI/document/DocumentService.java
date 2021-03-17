@@ -42,7 +42,9 @@ public class DocumentService {
             classe.setName(inscription.getClasse().getName());
             classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
             classe.setTeacherLastName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getLastname());
-            classe.setStudentPoints(computeStudentPoints(inscription.getUserTestList()));
+            HashMap<String, Long> pointsAndMissed = computePointsAndMissed(inscription.getUserTestList());
+            classe.setStudentPoints((pointsAndMissed.get("points")));
+            classe.setMissedTest(pointsAndMissed.get("missed"));
             bulletin.addClasse(classe);
         }
 
@@ -56,22 +58,26 @@ public class DocumentService {
         return null;
     }
 
-    private Long computeStudentPoints(List<UserTest> userTestList) {
-        if (userTestList == null || userTestList.isEmpty()) {
-            return null;
-        } else {
-            Long total = 0L;
-            for (UserTest userTest : userTestList) {
-                total += userTest.getPoints();
-                if (!userTest.isPresent()) {
-//                    todo compute missed test
-                }
-            }
-//            Change return and structure
-            return (total / userTestList.size());
-        }
-    }
+    private HashMap<String, Long> computePointsAndMissed(List<UserTest> userTestList) {
+        HashMap<String, Long> pointsAndMissed = new HashMap<>();
 
+        Long total = 0L;
+        Long missed = 0L;
+
+        for (UserTest userTest : userTestList) {
+            total += userTest.getPoints();
+            if (!userTest.isPresent()) {
+                missed++;
+            }
+        }
+
+        if (userTestList.size() != 0) {
+            pointsAndMissed.put("points", (total / userTestList.size()));
+        }
+
+        pointsAndMissed.put("missed", missed);
+        return pointsAndMissed;
+    }
 
     public FileInputStream getDocByUuid(UUID uuid) throws FileNotFoundException {
         String basePath = "C:\\Users\\mEH\\Documents\\IEPSCF\\SGBD\\PROJET\\SGBD-API\\tmp\\";

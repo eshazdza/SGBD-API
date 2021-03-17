@@ -51,9 +51,6 @@ th {
     width: 2cm;
 }
 
-.ptsClasse {
-    width: 2cm;
-}
 
 .other {
     width: 10cm;
@@ -71,4 +68,8 @@ th {
 
 .teacher-firstname, .teacher-lastname, .prof-title{
     font-size: 12px;
+}
+
+.student-points {
+    text-align: center;
 }

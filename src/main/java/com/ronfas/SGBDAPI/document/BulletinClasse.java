@@ -8,7 +8,7 @@ public class BulletinClasse {
     private Long pointsAverage;
     private Long studentPoints;
     private String comment;
-    private int missedTest;
+    private Long missedTest;
 
     public BulletinClasse() {
     }
@@ -69,11 +69,11 @@ public class BulletinClasse {
         this.comment = comment;
     }
 
-    public int getMissedTest() {
+    public Long getMissedTest() {
         return missedTest;
     }
 
-    public void setMissedTest(int missedTest) {
+    public void setMissedTest(Long missedTest) {
         this.missedTest = missedTest;
     }
 }
