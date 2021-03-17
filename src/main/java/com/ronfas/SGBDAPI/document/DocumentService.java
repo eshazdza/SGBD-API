@@ -45,6 +45,7 @@ public class DocumentService {
             HashMap<String, Long> pointsAndMissed = computePointsAndMissed(inscription.getUserTestList());
             classe.setStudentPoints((pointsAndMissed.get("points")));
             classe.setMissedTest(pointsAndMissed.get("missed"));
+            classe.setComment("yerr a wizerd Harry");
             bulletin.addClasse(classe);
         }
 

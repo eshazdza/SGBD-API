@@ -28,16 +28,10 @@
             <div class="student-details">
                 <ul>
                     <li>
-                        <p>Firstname : <span th:text="*{studentFirstName}"></span></p>
+                        <p>Nom : <span th:text="*{studentLastName}"></span></p>
                     </li>
                     <li>
-                        <p>Lastname : <span th:text="*{studentLastName}"></span></p>
-                    </li>
-                    <li>
-                        <p>nb class : ${studentNbClasses}</p>
-                    </li>
-                    <li>
-                        <p>nb abs : ${studentNbAbs}</p>
+                        <p>Prénom : <span th:text="*{studentFirstName}"></span></p>
                     </li>
                 </ul>
             </div>
@@ -64,15 +58,18 @@
                 <td>
                     <p class="classe-name"><span th:text="${classe.name}" class="classe-name"></span></p>
                     <p class="classe-id"><span th:text="${classe.id}" class="classe-id"></span></p>
-                    <p class="prof-title">Professeur : <span th:text="${classe.teacherFirstName}" class="teacher-firstname"></span> <span th:text="${classe.teacherLastName}" class="teacher-lastname"></span></p>
+                    <p class="prof-title">Professeur : <span th:text="${classe.teacherFirstName}"
+                                                             class="teacher-firstname"></span> <span
+                            th:text="${classe.teacherLastName}" class="teacher-lastname"></span></p>
 
                 </td>
                 <td>
-                    <p class="student-points" th:text="${classe.studentPoints}"></p>
+                    <p class="student-points"><span th:text="${classe.studentPoints}"></span><span>/100</span></p>
                 </td>
                 <td>
-
-                    <p th:unless="${classe.missedTest == 0}">Absence (interrogations) : <span th:text="${classe.missedTest}"></span></p>
+                    <p th:unless="${classe.missedTest == 0}">Absence (interrogations) : <span
+                            th:text="${classe.missedTest}"></span></p>
+                    <p th:text="${classe.comment}"></p>
 
                 </td>
             </tr>

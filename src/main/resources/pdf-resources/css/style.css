@@ -19,15 +19,12 @@ ul {
     border: 1px solid black;
     display: inline-block;
     width: 40%;
-    height: 160px;
-    /*margin: auto;*/
 }
 
 .student-details {
     border: 1px solid black;
     display: inline-block;
     width: 40%;
-    height: 160px;
     vertical-align: top;
     float: right;
 }
