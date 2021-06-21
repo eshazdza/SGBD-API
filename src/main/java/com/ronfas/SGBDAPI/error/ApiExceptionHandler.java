@@ -87,9 +87,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(FileNotFoundException.class)
     protected ResponseEntity<Object> handleFileNotFound(
             FileNotFoundException ex
-    ){
+    ) {
         ApiError apiError = new ApiError(HttpStatus.OK);
         apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(MismatchPasswordException.class)
+    protected ResponseEntity<Object> handleMismatchPassword(
+            MismatchPasswordException ex
+    ) {
+        ApiError apiError = new ApiError(HttpStatus.OK);
+        apiError.setMessage("Passwords do not match.");
         return buildResponseEntity(apiError);
     }
 

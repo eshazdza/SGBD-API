@@ -1,6 +1,7 @@
 package com.ronfas.SGBDAPI.user;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
+import com.ronfas.SGBDAPI.error.MismatchPasswordException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,12 @@ public class UserService {
      * @return REST compliant model of the persisted user
      */
     public User saveUser(UserEntity userEntity) {
+        if (!userEntity.getPassword().equals(userEntity.getConfirmPassword())){
+            throw new MismatchPasswordException();
+        }
+
+        
+
         return userAssembler.toModel(userRepository.save(userEntity));
     }
 
