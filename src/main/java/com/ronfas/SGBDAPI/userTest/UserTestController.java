@@ -1,5 +1,7 @@
 package com.ronfas.SGBDAPI.userTest;
 
+import com.ronfas.SGBDAPI.ListDTO;
+import com.ronfas.SGBDAPI.classes.Classe;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -46,6 +48,13 @@ public class UserTestController {
                         .getRequiredLink(IanaLinkRelations.SELF)
                         .toUri())
                 .body(userTestEntityModel);
+    }
+
+    @PostMapping("/list")
+    CollectionModel<UserTest> listUserTests(
+            @RequestBody ListDTO payload
+    ) {
+        return this.userTestService.getUserTests(payload);
     }
 
     @PutMapping("/{id}")

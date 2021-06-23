@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.classes;
 
+import com.ronfas.SGBDAPI.ListDTO;
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import com.ronfas.SGBDAPI.user.User;
 import com.ronfas.SGBDAPI.user.UserEntity;
@@ -7,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -56,7 +58,7 @@ public class ClasseService {
      * Updates or create Classes
      *
      * @param classeEntity Classes entity to persist
-     * @param uid   Of the Classes entity to update
+     * @param uid          Of the Classes entity to update
      * @return REST compliant model of the persisted Classes
      */
     public Classe updateClasse(ClasseEntity classeEntity, UUID uid) {
@@ -89,11 +91,19 @@ public class ClasseService {
     }
 
     /**
-     *
      * @param uuid of the classe
      * @return User the teacher of the classe
      */
-    public UserEntity getTeacherForClasse(UUID uuid){
+    public UserEntity getTeacherForClasse(UUID uuid) {
         return classeRepository.findTeacherForClasse(uuid);
+    }
+
+    /**
+     * @param payload
+     * @return
+     */
+    public CollectionModel<Classe> getUserClasses(ListDTO payload) {
+        List<ClasseEntity> classeList = classeRepository.findUserClasses(Long.parseLong(payload.getFilter().getId()) );
+        return this.classeModelAssembler.toCollectionModel(classeList);
     }
 }

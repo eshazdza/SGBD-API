@@ -5,7 +5,9 @@ import com.ronfas.SGBDAPI.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.hateoas.CollectionModel;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,4 +25,11 @@ public interface ClasseRepositoryInterface extends JpaRepository<ClasseEntity, U
     UserEntity findTeacherForClasse(
             @Param("uuid") UUID uuid
     );
+
+    @Query(" SELECT c FROM classes c left join user_cours uc on uc.classe = c left join user u on u.id = uc.userEntity.id where u.id = :uuid"
+    )
+    List<ClasseEntity> findUserClasses(
+            @Param("uuid") Long uuid
+    );
+
 }

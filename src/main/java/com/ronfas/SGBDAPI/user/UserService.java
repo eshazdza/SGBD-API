@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.user;
 
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import com.ronfas.SGBDAPI.error.MismatchPasswordException;
+import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
@@ -50,11 +51,10 @@ public class UserService {
      * @return REST compliant model of the persisted user
      */
     public User saveUser(UserEntity userEntity) {
-        if (!userEntity.getPassword().equals(userEntity.getConfirmPassword())){
+        if (!userEntity.getPassword().equals(userEntity.getConfirmPassword())) {
             throw new MismatchPasswordException();
         }
 
-        
 
         return userAssembler.toModel(userRepository.save(userEntity));
     }
@@ -63,7 +63,7 @@ public class UserService {
      * Updates or create user
      *
      * @param userEntity User entity to persist
-     * @param id   Of the user entity to update
+     * @param id         Of the user entity to update
      * @return REST compliant model of the persisted user
      */
     public User updateUser(UserEntity userEntity, Long id) {
@@ -90,5 +90,21 @@ public class UserService {
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(UserEntity.class, "id", id.toString());
         }
+    }
+
+    public User signin(SigninDTO signinDTO) {
+        UserEntity foundUser = this.getUserByEmail(signinDTO.getEmail());
+        if (foundUser != null) {
+            if (foundUser.getPassword().equals(signinDTO.getPassword())) {
+                return userAssembler.toModel(foundUser);
+            } else {
+                throw new EntityNotFoundException(UserEntity.class, "email", signinDTO.getEmail());
+            }
+        }
+        throw new EntityNotFoundException(UserEntity.class, "email", signinDTO.getEmail());
+    }
+
+    private UserEntity getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 }

@@ -1,5 +1,6 @@
 package com.ronfas.SGBDAPI.classes;
 
+import com.ronfas.SGBDAPI.ListDTO;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ClasseController {
     }
 
     @PostMapping("")
-    ResponseEntity<?> newClasse (
+    ResponseEntity<?> newClasse(
             @RequestBody @Valid ClasseEntity newClasse
     ) {
         Classe classesEntityModel = this.classeService.saveClasse(newClasse);
@@ -41,6 +42,13 @@ public class ClasseController {
                         .getRequiredLink(IanaLinkRelations.SELF)
                         .toUri())
                 .body(classesEntityModel);
+    }
+
+    @PostMapping("/list")
+    CollectionModel<Classe> listClasses(
+            @RequestBody ListDTO payload
+            ) {
+       return this.classeService.getUserClasses(payload);
     }
 
     @PutMapping("/{uid}")

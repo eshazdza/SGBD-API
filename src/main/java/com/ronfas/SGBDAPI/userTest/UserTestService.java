@@ -1,5 +1,8 @@
 package com.ronfas.SGBDAPI.userTest;
 
+import com.ronfas.SGBDAPI.ListDTO;
+import com.ronfas.SGBDAPI.classes.Classe;
+import com.ronfas.SGBDAPI.classes.ClasseEntity;
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import com.ronfas.SGBDAPI.inscription.InscriptionEntity;
 import com.ronfas.SGBDAPI.inscription.InscriptionService;
@@ -8,6 +11,8 @@ import com.ronfas.SGBDAPI.test.TestService;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -94,5 +99,15 @@ public class UserTestService {
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotFoundException(UserTestEntity.class, "id", id.toString());
         }
+    }
+
+    /**
+     * @param payload
+     * @return
+     */
+    public CollectionModel<UserTest> getUserTests(ListDTO payload) {
+
+        List<UserTestEntity> testList = userTestRepository.findUserTests(Long.parseLong(payload.getFilter().getId()) );
+        return this.userTestModelAssembler.toCollectionModel(testList);
     }
 }

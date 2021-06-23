@@ -13,11 +13,10 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/{id}")
     public ResponseEntity<?> getDocumentByUser(
-            @RequestParam("id") long id
+            @PathVariable Long id
     ) {
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setCacheControl(CacheControl.noCache().getHeaderValue());
         httpHeaders.setContentDisposition(ContentDisposition.parse("attachment; filename=bulletin.pdf"));

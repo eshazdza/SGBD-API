@@ -43,6 +43,20 @@ public class UserController {
                 .body(userEntityModel);
     }
 
+    @PostMapping("/signin")
+    ResponseEntity<?> signin(
+            @RequestBody @Valid SigninDTO signinDTO
+    ) {
+        User userEntityModel = this.userService.signin(signinDTO);
+//      Generates REST/IANA compliant Self link for the created resource and returns a 201 http status with the created resource
+        return ResponseEntity.created(
+                userEntityModel
+                        .getRequiredLink(IanaLinkRelations.SELF)
+                        .toUri())
+                .body(userEntityModel);
+    }
+
+
     @PutMapping("/{id}")
     ResponseEntity<?> updateUser(
             @RequestBody @Valid UserEntity userEntity,
