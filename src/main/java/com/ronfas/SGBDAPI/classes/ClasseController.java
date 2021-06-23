@@ -31,6 +31,13 @@ public class ClasseController {
         return this.classeService.getClasseByUid(uid);
     }
 
+    @GetMapping("/unregistered/{id}")
+    public CollectionModel<Classe> allUnregistered(
+            @PathVariable String id
+    ) {
+        return this.classeService.getUnregisteredForUser(id);
+    }
+
     @PostMapping("")
     ResponseEntity<?> newClasse(
             @RequestBody @Valid ClasseEntity newClasse

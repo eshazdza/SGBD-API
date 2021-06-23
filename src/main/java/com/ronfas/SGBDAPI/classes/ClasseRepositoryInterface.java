@@ -32,4 +32,25 @@ public interface ClasseRepositoryInterface extends JpaRepository<ClasseEntity, U
             @Param("uuid") Long uuid
     );
 
+    @Query(value = " select distinct * from classes c " +
+            "left join user_cours uc on uc.class_uid = c.uid " +
+            "left join `user` u on u.id = uc.user_id " +
+            "where c.uid not in ( " +
+            "select uc.class_uid from user_cours uc " +
+            "where uc.user_id = :uuid" +
+            ")group by c.uid;"
+            , nativeQuery = true)
+    List<ClasseEntity> findUnregisteredForUser(
+            @Param("uuid") Long uuid
+    );
+
+//    select distinct * from classes c
+//    left join user_cours uc on uc.class_uid = c.uid
+//    left join `user` u on u.id = uc.user_id
+//    where c.uid not in (
+//            select uc.class_uid from user_cours uc
+//            where uc.user_id = 39
+//    )
+//            ;
+
 }

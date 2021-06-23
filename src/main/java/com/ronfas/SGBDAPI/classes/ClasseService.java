@@ -106,4 +106,10 @@ public class ClasseService {
         List<ClasseEntity> classeList = classeRepository.findUserClasses(Long.parseLong(payload.getFilter().getId()) );
         return this.classeModelAssembler.toCollectionModel(classeList);
     }
+
+    public CollectionModel<Classe> getUnregisteredForUser(String id) {
+        List<ClasseEntity> classeList = classeRepository.findUnregisteredForUser(Long.parseLong(id));
+        return this.classeModelAssembler.toCollectionModel(classeList);
+
+    }
 }
