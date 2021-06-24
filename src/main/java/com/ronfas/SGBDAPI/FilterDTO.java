@@ -1,9 +1,12 @@
 package com.ronfas.SGBDAPI;
 
+import java.util.UUID;
+
 public class FilterDTO {
     private String id;
     private String firstName;
     private String lastName;
+    private UUID uuid;
 
     public String getId() {
         return id;
@@ -27,5 +30,13 @@ public class FilterDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }

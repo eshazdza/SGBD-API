@@ -1,10 +1,13 @@
 package com.ronfas.SGBDAPI.test;
 
+import com.ronfas.SGBDAPI.ListDTO;
 import com.ronfas.SGBDAPI.error.EntityNotFoundException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TestService {
@@ -85,5 +88,9 @@ public class TestService {
     public TestEntity getTestEntityById(Long id) {
         return testRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(TestEntity.class, "id", id.toString()));
+    }
+
+    public CollectionModel<Test> getTestByClass(ListDTO payload) {
+        return testModelAssembler.toCollectionModel(testRepository.findByClasse(payload.getFilter().getUuid()));
     }
 }
