@@ -20,7 +20,7 @@ public interface ClasseRepositoryInterface extends JpaRepository<ClasseEntity, U
 //    )
 //    User findTeacherForClasse(UUID uuid);
 
-    @Query("SELECT u FROM user u left join user_cours uc on uc.userEntity = u left join role r  on r = uc.roleEntity  where r.roleType =0 AND uc.classe.uid = :uuid "
+    @Query("SELECT u FROM user u left join user_cours uc on uc.userEntity = u left join role r  on r = uc.roleEntity  where r.roleType =0 AND uc.classe.uid = :uuid order by u.id asc"
     )
     UserEntity findTeacherForClasse(
             @Param("uuid") UUID uuid

@@ -41,6 +41,8 @@ public class TestController {
     ResponseEntity<?> newTest(
             @RequestBody TestEntity newTestEntity
     ) {
+
+        System.out.println(newTestEntity);
         Test testEntityModel = testService.saveTest(newTestEntity);
 
         return ResponseEntity.created(

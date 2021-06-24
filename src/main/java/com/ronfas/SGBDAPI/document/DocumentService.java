@@ -2,6 +2,7 @@ package com.ronfas.SGBDAPI.document;
 
 import com.ronfas.SGBDAPI.classes.ClasseService;
 import com.ronfas.SGBDAPI.inscription.Inscription;
+import com.ronfas.SGBDAPI.role.RoleType;
 import com.ronfas.SGBDAPI.user.User;
 import com.ronfas.SGBDAPI.user.UserService;
 import com.ronfas.SGBDAPI.userTest.UserTest;
@@ -37,16 +38,18 @@ public class DocumentService {
 
         for (Inscription inscription :
                 user.getInscriptionList()) {
-            BulletinClasse classe = new BulletinClasse();
-            classe.setId(inscription.getClasse().getId());
-            classe.setName(inscription.getClasse().getName());
-            classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
-            classe.setTeacherLastName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getLastname());
-            HashMap<String, Long> pointsAndMissed = computePointsAndMissed(inscription.getUserTestList());
-            classe.setStudentPoints((pointsAndMissed.get("points")));
-            classe.setMissedTest(pointsAndMissed.get("missed"));
-            classe.setComment("Exemple de commentaire");
-            bulletin.addClasse(classe);
+            if (inscription.getRole().getRoleType() == RoleType.STUDENT) {
+                BulletinClasse classe = new BulletinClasse();
+                classe.setId(inscription.getClasse().getId());
+                classe.setName(inscription.getClasse().getName());
+                classe.setTeacherFirstName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getFirstname());
+                classe.setTeacherLastName(classeService.getTeacherForClasse(inscription.getClasse().getUuid()).getLastname());
+                HashMap<String, Long> pointsAndMissed = computePointsAndMissed(inscription.getUserTestList());
+                classe.setStudentPoints((pointsAndMissed.get("points")));
+                classe.setMissedTest(pointsAndMissed.get("missed"));
+                classe.setComment("Exemple de commentaire");
+                bulletin.addClasse(classe);
+            }
         }
 
         data.put("bulletin", bulletin);
